@@ -4,8 +4,8 @@ class Gun {
     
     constructor(owner){
         this.owner = owner;
-        
         this.projectile = new Projectile();
+        this.canFire = false;
         this.fireKeyPrev = false;
     }
     
@@ -13,15 +13,14 @@ class Gun {
         
     }
     
-    update(input){
-        if(input.space.isDown && !this.fireKeyPrev){
-            console.log("SHOOT");
-        }
-        this.fireKeyPrev = input.space.isDown;
+    update(){
+        
+        this.fireKeyPrev = this.canFire;
     }
     
-    fire(){
-        //spawn projectile  
+    fire(bool){
+        
+        this.canFire = bool;
     }
     
     

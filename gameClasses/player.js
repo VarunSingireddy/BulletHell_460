@@ -2,10 +2,17 @@ class Player {
     constructor() {
         this.speed = new Phaser.Math.Vector2(450.0, 450.0); //300;
         this.velocity = new Phaser.Math.Vector2(0, 0);
-
+        this.dir = new Phaser.Math.Vector2(0, 0);
         this.gun = new Gun();
-
+        this.dirFlags = {
+            up: false,
+            down: false,
+            left: false,
+            right: false
+        };
     }
+    
+    
 
     init(entity) {
         this.entity = entity;
@@ -15,52 +22,73 @@ class Player {
         //console.log(this.entity.body.useDampening);
         //this.entity.useDampening = true;
         console.log(this.entity);
-   
+
     }
 
-    update(input, dt) {
-        let dir = this.handleDirection(input);
+    update(dt) {
+        this.handleDirection();
         //console.log(dt);
 
-        if (dir.x != 0 || dir.y != 0) {
+        if (this.dir.x != 0 || this.dir.y != 0) {
 
-            dir.multiply(this.speed);
+            this.dir.multiply(this.speed);
 
             //dir.divide(new Phaser.Math.Vector2(1000,1000));
             //console.log(dir);
 
-            this.entity.body.setVelocity(dir.x, dir.y);
+            this.entity.body.setVelocity(this.dir.x, this.dir.y);
         }
         
-        this.gun.update(input);
-        
-        
-        
-        
+        this.gun.update();
+
+        this.dir.set(0, 0);
+    }
+
+    setDirFlags(int, bool) {
+
+        switch (int) {
+            case 1:
+                this.dirFlags.up = bool;
+                break;
+            case 2:
+                this.dirFlags.down = bool;
+                break;
+            case 3:
+                this.dirFlags.left = bool;
+                break;
+            case 4:
+                this.dirFlags.right = bool;
+                break;
+            default:
+                console.log("no dir flag present");
+                break;
+        }
         
     }
 
-
+    fire(bool){
+        this.gun.fire(bool);
+    }
+    
+    
     handleDirection(input) {
-        let dir = new Phaser.Math.Vector2(0, 0);
+           // let dir = new Phaser.Math.Vector2(0, 0);
+            
+            if (this.dirFlags.up) {
+                this.dir.add(Phaser.Math.Vector2.UP);
+            }
+            if (this.dirFlags.down) {
+                this.dir.add(Phaser.Math.Vector2.DOWN);
+            }
+            if (this.dirFlags.left) {
+                this.dir.add(Phaser.Math.Vector2.LEFT);
+            }
+            if (this.dirFlags.right) {
+                this.dir.add(Phaser.Math.Vector2.RIGHT);
+            }
 
-        if (input.left.isDown) {
-            dir.add(Phaser.Math.Vector2.LEFT);
+            this.dir.normalize();
         }
-        if (input.right.isDown) {
-            dir.add(Phaser.Math.Vector2.RIGHT);
-        }
-        if (input.up.isDown) {
-            dir.add(Phaser.Math.Vector2.UP);
-        }
-        if (input.down.isDown) {
-            dir.add(Phaser.Math.Vector2.DOWN);
-        }
+        
 
-        return dir.normalize();
-    }
-
-    
-    
-    
 }
