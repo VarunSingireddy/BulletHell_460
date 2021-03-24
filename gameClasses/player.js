@@ -1,9 +1,11 @@
 class Player {
-    constructor() {
+    constructor(scene) {
+        this.scene = scene;
         this.speed = new Phaser.Math.Vector2(450.0, 450.0); //300;
         this.velocity = new Phaser.Math.Vector2(0, 0);
         this.dir = new Phaser.Math.Vector2(0, 0);
-        this.gun = new Gun();
+        this.gun = new Gun(this,scene);
+        
         this.dirFlags = {
             up: false,
             down: false,
@@ -21,6 +23,10 @@ class Player {
         this.entity.setDrag(2000);
         //console.log(this.entity.body.useDampening);
         //this.entity.useDampening = true;
+        
+        this.gun.init(this.scene.add.image(this.entity.x,this.entity.y,'bullet'));
+        
+        
         console.log(this.entity);
 
     }
@@ -69,6 +75,7 @@ class Player {
     fire(bool){
         this.gun.fire(bool);
     }
+    
     
     
     handleDirection(input) {

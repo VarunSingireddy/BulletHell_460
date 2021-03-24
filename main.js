@@ -17,16 +17,20 @@ const config = {
             this.load.image('bullet', 'data/bullet.png');
 
 
-
+            
 
 
         },
         create: function () {
-            this.player = new Player();
+            this.player = new Player(this);
             this.player.init(this.physics.add.image(400, 300, 'default'));
-
+            
+            
 
             var player = this.player;
+            
+            
+            
             this.input.keyboard.on('keydown-' + 'W', (e)=>{player.setDirFlags(1,true);});
             this.input.keyboard.on('keyup-' + 'W', (e) => {player.setDirFlags(1,false);});
             this.input.keyboard.on('keydown-' + 'UP', (e)=>{player.setDirFlags(1,true);});
@@ -47,10 +51,6 @@ const config = {
             this.input.keyboard.on('keydown-' + 'RIGHT', (e)=>{player.setDirFlags(4,true);});
             this.input.keyboard.on('keyup-' + 'RIGHT', (e) => {player.setDirFlags(4,false);});
             
-            console.log(this.input);
-            
-           // this.input.mouse.onMouseDown();
-            
             this.input.keyboard.on('keydown-' + 'SPACE', (e)=>{player.fire(true);});
             this.input.keyboard.on('keyup-' + 'SPACE', (e) => {player.fire(false);});
             
@@ -61,21 +61,41 @@ const config = {
             //this.input.keyboard.cursorKeys.on('keydown',function (event) { console.log("down");});
             
             
-
+            this.bullets = this.physics.add.group();
+            
+            //this.bullets.defaults.allowGravity = false;
+            //console.log(this.bullets.defaults);
+            
 
 
             //this.physics.
 
             this.cursors = this.input.keyboard.createCursorKeys();
+            
+            this.angleToMouseRad = function(entity){
+               
+                let angle = Phaser.Math.Angle.Between(entity.x,entity.y,this.input.mousePointer.x,this.input.mousePointer.y);
+                
+               // angle += Math.PI*.5;
+                
+                
+                return angle;
+            }
+            
+            this.angleToMouseDeg = function(entity){
+                let angle = this.angleToMouseRad(entity);
+                
+                return angle *= Phaser.Math.RAD_TO_DEG;
+            }
 
-
+            //console.log(this.angleToMouse(player.entity));
 
         },
         update: function (time, delta) {
 
             this.player.update(delta / 1000);
-
-
+            //this.player
+            
 
         },
 
