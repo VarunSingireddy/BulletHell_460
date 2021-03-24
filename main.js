@@ -95,7 +95,7 @@ const config = {
 
             this.player.update(delta / 1000);
             //this.player
-            
+            console.log(this.player.gun.projectiles.length);
 
         },
 
