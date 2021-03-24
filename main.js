@@ -57,6 +57,10 @@ const config = {
             this.input.on('pointerdown', (e)=>{player.fire(true);});
             this.input.on('pointerup', (e)=>{player.fire(false);});
             
+            //switch guns
+            this.input.keyboard.on('keydown-' + 'R', (e)=>{player.switchGun(1);});
+            this.input.keyboard.on('keydown-' + 'E', (e)=>{player.switchGun(-1);});
+            
 
             //this.input.keyboard.cursorKeys.on('keydown',function (event) { console.log("down");});
             
@@ -95,12 +99,11 @@ const config = {
 
             this.player.update(delta / 1000);
             //this.player
-            console.log(this.player.gun.projectiles.length);
 
         },
 
 
-    }
+    }//scene
 };
 
 

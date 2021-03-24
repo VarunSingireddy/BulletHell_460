@@ -1,19 +1,13 @@
-
-
-
-class Projectile{
-    
+class Hook extends Projectile
+{    
     constructor(owner,scene,powerupFlags){
-        this.owner = owner;
+        /*this.owner = owner;
         this.scene = scene;
         this.speed = 600;
         this.velocity = new Phaser.Math.Vector2(0,0);
-        this.delete = false;
-       // console.log(scene);d
+        this.delete = false;*/
         
-        //this.
-        
-        
+        super();
     }//constructor()
     
     init(entity){
@@ -55,7 +49,4 @@ class Projectile{
         this.entity.body.setVelocity(this.velocity.x,this.velocity.y);
         
     }//setVelocityTwoardMouse()
-    
-    
-    
 }
