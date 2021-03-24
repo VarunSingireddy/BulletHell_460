@@ -6,6 +6,12 @@ class Player {
         this.dir = new Phaser.Math.Vector2(0, 0);
         this.gun = new Gun(this,scene);
         
+        this.powerupFlags = {
+            portal: false,
+            multiShot:false,
+            slowPocket:false
+        }
+        
         this.dirFlags = {
             up: false,
             down: false,

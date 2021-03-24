@@ -12,8 +12,7 @@ class Gun {
 
     init(entity) {
         this.entity = entity;
-
-
+        
     }
 
     update() {
@@ -23,7 +22,8 @@ class Gun {
         
         //console.log(this.scene.angleToMouse(this.entity));
         this.entity.angle = this.scene.angleToMouseDeg(this.entity)+90;
-
+        
+        this.updateProjectiles();
 
 
         this.shootDownPrev = this.shootDown;
@@ -32,15 +32,26 @@ class Gun {
     fire(bool) {
         //console.log("BANG");
         if (bool) {
-            let bullet = new Projectile(this, this.scene);
+            let bullet = new Projectile(this, this.scene,this.owner.powerupFlags);
             //console.log(this.owner);
             bullet.init(this.scene.bullets.create(this.entity.x,this.entity.y,'default'));
             bullet.onFire();
             this.projectiles.push(bullet);
         }
+        
         this.shootDown = bool;
 
     }
+    
+    updateProjectiles(){
+        for(int i = this.projectiles.length-1; i => 0 ;i--){
+            
+            this.projectiles[i].update();
+            
+            
+        }   
+    }
+    
     
     
 
