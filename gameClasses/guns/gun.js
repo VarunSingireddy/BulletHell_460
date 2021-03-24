@@ -23,7 +23,7 @@ class Gun {
         //console.log(this.scene.angleToMouse(this.entity));
         this.entity.angle = this.scene.angleToMouseDeg(this.entity)+90;
         
-        this.updateProjectiles();
+        //this.updateProjectiles();
 
 
         this.shootDownPrev = this.shootDown;
@@ -44,13 +44,16 @@ class Gun {
     }
     
     updateProjectiles(){
-        for(int i = this.projectiles.length-1; i => 0 ;i--){
+        
+        for(let i = this.projectiles.length-1; i => 0 ;i--){
             
             this.projectiles[i].update();
             
             
         }   
+        
     }
+    
     
     
     
