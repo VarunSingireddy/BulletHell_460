@@ -12,17 +12,17 @@ class Gun {
 
     init(entity) {
         this.entity = entity;
-        
+
     }
 
     update() {
         //I don't know why this causes easing but it does and I dig it
         this.entity.x = this.owner.entity.x;
         this.entity.y = this.owner.entity.y;
-        
+
         //console.log(this.scene.angleToMouse(this.entity));
-        this.entity.angle = this.scene.angleToMouseDeg(this.entity)+90;
-        
+        this.entity.angle = this.scene.angleToMouseDeg(this.entity) + 90;
+
         this.updateProjectiles();
 
 
@@ -32,28 +32,44 @@ class Gun {
     fire(bool) {
         //console.log("BANG");
         if (bool) {
-            let bullet = new Projectile(this, this.scene,this.owner.powerupFlags);
+            let bullet = new Projectile(this, this.scene, this.owner.powerupFlags);
             //console.log(this.owner);
-            bullet.init(this.scene.bullets.create(this.entity.x,this.entity.y,'default'));
+            bullet.init(this.scene.bullets.create(this.entity.x, this.entity.y, 'default'));
             bullet.onFire();
             this.projectiles.push(bullet);
+
+
+            //if multishot is active, spawn additional bullets
+            //console.log(this.owner.powerupFlags.multiShot);            
+            if (this.owner.powerupFlags.multiShot) {
+                //spawn Left Split
+                let bulletL = new Projectile(this, this.scene, this.owner.powerupFlags);
+                bulletL.isLeftSplit = true;
+                bulletL.init(this.scene.bullets.create(this.entity.x, this.entity.y, 'default'));
+                bulletL.onFire();
+                this.projectiles.push(bulletL);
+
+                //spawn Right Split
+                let bulletR = new Projectile(this, this.scene, this.owner.powerupFlags);
+                bulletR.isRightSplit = true;
+                bulletR.init(this.scene.bullets.create(this.entity.x, this.entity.y, 'default'));
+                bulletR.onFire();
+                this.projectiles.push(bulletR);
+            }
         }
-        
+
         this.shootDown = bool;
 
     }
-    
-    updateProjectiles()
-    {
-        for(let i = 0; i < this.projectiles.length; ++i)
-        {
+
+    updateProjectiles() {
+        for (let i = 0; i < this.projectiles.length; ++i) {
             this.projectiles[i].update();
-            if(this.projectiles[i].delete)
-            {
+            if (this.projectiles[i].delete) {
                 this.projectiles.splice(i, 1);
                 --i;
             }
         }
         //console.log(this.projectiles);
-    }//updateProjectiles()
+    } //updateProjectiles()
 }
