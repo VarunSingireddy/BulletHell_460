@@ -11,7 +11,7 @@ class Player {
         
         this.powerupFlags = {
             portal: false,
-            multiShot:false,
+            multiShot:true,
             slowPocket:false
         }
         
