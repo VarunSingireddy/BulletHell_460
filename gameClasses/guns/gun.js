@@ -1,6 +1,6 @@
 class Gun {
 
-    constructor(owner, scene) {
+    constructor(owner, scene, img) {
         this.scene = scene;
         this.owner = owner;
         this.entity; //set in the player
@@ -8,12 +8,13 @@ class Gun {
         this.shootDown = false;
         this.shootDownPrev = false; //not used in the
         this.projectiles = [];
+        this.img = img;
     }
 
     init(entity) {
         this.entity = entity;
-
-    }
+        
+    }//init()
 
     update() {
         //I don't know why this causes easing but it does and I dig it
@@ -27,14 +28,14 @@ class Gun {
 
 
         this.shootDownPrev = this.shootDown;
-    }
+    }//update()
 
     fire(bool) {
         //console.log("BANG");
         if (bool) {
             let bullet = new Projectile(this, this.scene, this.owner.powerupFlags);
             //console.log(this.owner);
-            bullet.init(this.scene.bullets.create(this.entity.x, this.entity.y, 'default'));
+            bullet.init(this.scene.bullets.create(this.entity.x,this.entity.y, this.img));//'default'));
             bullet.onFire();
             this.projectiles.push(bullet);
 
@@ -60,16 +61,19 @@ class Gun {
 
         this.shootDown = bool;
 
-    }
-
-    updateProjectiles() {
-        for (let i = 0; i < this.projectiles.length; ++i) {
+    }//fire()
+    
+    updateProjectiles()
+    {
+        for(let i = 0; i < this.projectiles.length; ++i)
+        {
             this.projectiles[i].update();
-            if (this.projectiles[i].delete) {
-                this.projectiles.splice(i, 1);
+            if(this.projectiles[i].delete)
+            {
+                this.projectiles[i].onDie();//kill bullet
+                this.projectiles.splice(i, 1);//make sure all references to it are removed
                 --i;
             }
         }
-        //console.log(this.projectiles);
-    } //updateProjectiles()
+    }//updateProjectiles()
 }

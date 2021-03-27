@@ -1,22 +1,13 @@
-
-
-
-class Projectile{
-    
+class Hook extends Projectile
+{    
     constructor(owner,scene,powerupFlags){
-        this.owner = owner;
+        /*this.owner = owner;
         this.scene = scene;
         this.speed = 600;
         this.velocity = new Phaser.Math.Vector2(0,0);
-        this.delete = false;
-        this.isLeftSplit = false;
-        this.isRightSplit = false;
-        this.splitAngleChange = 30.7;
-       // console.log(scene);d
+        this.delete = false;*/
         
-        //this.
-        
-        
+        super();
     }//constructor()
     
     init(entity){
@@ -51,10 +42,6 @@ class Projectile{
     setVelocityTwoardMouse(){
         this.angle = this.scene.angleToMouseRad(this.entity);
         
-        if(this.isLeftSplit) this.angle += this.splitAngleChange;
-        if(this.isRightSplit) this.angle += -this.splitAngleChange;
-        
-        
         this.velocity.x = this.speed * Math.cos(this.angle);
         this.velocity.y = this.speed * Math.sin(this.angle);
         
@@ -62,7 +49,4 @@ class Projectile{
         this.entity.body.setVelocity(this.velocity.x,this.velocity.y);
         
     }//setVelocityTwoardMouse()
-    
-    
-    
 }
