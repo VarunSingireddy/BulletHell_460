@@ -1,6 +1,3 @@
-
-
-
 class Projectile{
     
     constructor(owner,scene,powerupFlags){

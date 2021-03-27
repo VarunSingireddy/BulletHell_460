@@ -1,7 +1,7 @@
 const config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: 1280,
+    height: 720,
     physics: {
         default: 'arcade', //this can be set to 'arcade' 'impact or 'matter' 
         arcade: {
@@ -115,11 +115,12 @@ const config = {
 
 
             //this.input.keyboard.cursorKeys.on('keydown',function (event) { console.log("down");});
-
-
+            
             this.bullets = this.physics.add.group();
             this.powerups = this.physics.add.group();
 
+            this.enemies = this.physics.add.group();
+            
             //this.bullets.defaults.allowGravity = false;
             //console.log(this.bullets.defaults);
 
