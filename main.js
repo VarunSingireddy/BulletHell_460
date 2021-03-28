@@ -174,7 +174,8 @@ const config = {
         },
         update: function (time, delta) {
 
-            this.player.update(delta / 1000);            
+            this.player.update(delta / 1000);   
+            this.physics.add.overlap(this.player.entity, this.powerups, powerupCollisionHandler, null, this);
             //this.updatePowerups();     
             //this.player
 
@@ -187,6 +188,11 @@ const config = {
 
     } //scene
 };
+
+function powerupCollisionHandler() {
+    //console.log("hitPowerUp")
+    //this.player.powerupFlags.multishot = true;
+}
 
 
 
