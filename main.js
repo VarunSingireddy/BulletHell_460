@@ -112,6 +112,12 @@ const config = {
             this.input.keyboard.on('keydown-' + 'T', (e) => {
                 this.spawnPowerup('bullet');
             });
+            this.input.keyboard.on('keydown-' + 'G', (e) => {
+                player.spawnGravityGrenade(true);
+            });
+            this.input.keyboard.on('keyup-' + 'G', (e) => {
+                player.spawnGravityGrenade(false);
+            });
 
 
             //this.input.keyboard.cursorKeys.on('keydown',function (event) { console.log("down");});
@@ -176,6 +182,10 @@ const config = {
 
             this.player.update(delta / 1000);   
             this.physics.add.overlap(this.player.entity, this.powerups, powerupCollisionHandler, null, this);
+            
+            for(i = 0; i < this.powerupArray.length; i++) {
+                this.powerupArray[i].update();
+            }
             //this.updatePowerups();     
             //this.player
 
@@ -189,9 +199,11 @@ const config = {
     } //scene
 };
 
-function powerupCollisionHandler() {
-    //console.log("hitPowerUp")
-    //this.player.powerupFlags.multishot = true;
+function powerupCollisionHandler(player, powerup) {
+    console.log(powerup)
+    
+    //powerup.setPlayerPowerup();
+    
 }
 
 

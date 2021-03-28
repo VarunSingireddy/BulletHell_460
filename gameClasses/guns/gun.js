@@ -46,14 +46,14 @@ class Gun {
                 //spawn Left Split
                 let bulletL = new Projectile(this, this.scene, this.owner.powerupFlags);
                 bulletL.isLeftSplit = true;
-                bulletL.init(this.scene.bullets.create(this.entity.x, this.entity.y, 'default'));
+                bulletL.init(this.scene.bullets.create(this.entity.x, this.entity.y, this.img));
                 bulletL.onFire();
                 this.projectiles.push(bulletL);
 
                 //spawn Right Split
                 let bulletR = new Projectile(this, this.scene, this.owner.powerupFlags);
                 bulletR.isRightSplit = true;
-                bulletR.init(this.scene.bullets.create(this.entity.x, this.entity.y, 'default'));
+                bulletR.init(this.scene.bullets.create(this.entity.x, this.entity.y, this.img));
                 bulletR.onFire();
                 this.projectiles.push(bulletR);
             }

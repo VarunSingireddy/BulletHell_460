@@ -4,26 +4,31 @@ class Player {
         this.speed = new Phaser.Math.Vector2(450.0, 450.0); //300;
         this.velocity = new Phaser.Math.Vector2(0, 0);
         this.dir = new Phaser.Math.Vector2(0, 0);
-        this.gun = new Gun(this, scene,'default');
+        this.gun = new Gun(this, scene, 'default');
         this.hook = new Gun(this, scene, 'bullet');
         this.gunArray = [this.gun, this.hook];
         this.gunIndex = 0;
-        
+        this.gravGrenade = new Gun(this, scene, 'default');
+        this.multiShotTimer = 5;
+        this.portalTimer = 5;
+        this.slowPocketsTimer = 5;
+
+
         this.powerupFlags = {
             portal: false,
-            multiShot:false,
-            slowPocket:false
+            multiShot: false,
+            slowPocket: false
         }
-        
+
         this.dirFlags = {
             up: false,
             down: false,
             left: false,
             right: false
         };
-    }//constructor()
-    
-    
+    } //constructor()
+
+
 
     init(entity) {
         this.entity = entity;
@@ -32,13 +37,14 @@ class Player {
         this.entity.setDrag(2000);
         //console.log(this.entity.body.useDampening);
         //this.entity.useDampening = true;
-        
-        this.gun.init(this.scene.add.image(this.entity.x,this.entity.y,'bullet'));
-        this.hook.init(this.scene.add.image(this.entity.x,this.entity.y,'bullet'));
-        
+
+        this.gun.init(this.scene.add.image(this.entity.x, this.entity.y, 'bullet'));
+        this.hook.init(this.scene.add.image(this.entity.x, this.entity.y, 'bullet'));
+        this.gravGrenade.init(this.scene.add.image(this.entity.x, this.entity.y, null));
+
         console.log(this.entity);
 
-    }//init()
+    } //init()
 
     update(dt) {
         this.handleDirection();
@@ -53,12 +59,14 @@ class Player {
 
             this.entity.body.setVelocity(this.dir.x, this.dir.y);
         }
-        
+
         this.gun.update();
         this.hook.update();
+        this.gravGrenade.update();
+        this.updatePowerupFlags(dt);
 
         this.dir.set(0, 0);
-    }//update()
+    } //update()
 
     setDirFlags(int, bool) {
 
@@ -79,27 +87,26 @@ class Player {
                 console.log("no dir flag present");
                 break;
         }
-        
-    }//setDirFlags()
 
-    fire(bool){
+    } //setDirFlags()
+
+    fire(bool) {
         //this.gun.fire(bool);
         this.gunArray[this.gunIndex].fire(bool);
-    }//fire()
-    
-    switchGun(i)
-    {
+    } //fire()
+
+    switchGun(i) {
         this.gunIndex += i;
-        if(this.gunIndex < 0) this.gunIndex = this.gunArray.length - 1;
-        else if(this.gunIndex == this.gunArray.length) this.gunIndex = 0;
+        if (this.gunIndex < 0) this.gunIndex = this.gunArray.length - 1;
+        else if (this.gunIndex == this.gunArray.length) this.gunIndex = 0;
         console.log("Using gun " + this.gunIndex);
-    }//switchGun()
-    
-    
-    
+    } //switchGun()
+
+
+
     handleDirection(input) {
         // let dir = new Phaser.Math.Vector2(0, 0);
-        
+
         if (this.dirFlags.up) {
             this.dir.add(Phaser.Math.Vector2.UP);
         }
@@ -114,7 +121,19 @@ class Player {
         }
 
         this.dir.normalize();
-    }//handleDirection()
-        
+    } //handleDirection()
+
+    updatePowerupFlags(dt) {
+        if(this.powerupFlags.multiShot) {
+            console.log(this.multiShotTimer);
+            this.multiShotTimer -= dt;
+            if(this.multiShotTimer <= 0) this.powerupFlags.multiShot = false;
+        }
+    }
+    
+    spawnGravityGrenade(bool) {
+        this.gravGrenade.fire(bool)
+    }
+
 
 }
