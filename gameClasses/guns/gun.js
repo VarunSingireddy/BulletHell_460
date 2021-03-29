@@ -70,7 +70,7 @@ class Gun {
             //this.projectiles[bulletIndex] = bullet;
             this.projectiles.push(bullet);
             bullet.entity.name = bulletIndex;
-            //this.projectiles.push(bullet);
+            this.projectiles.push(bullet);
 
 
             //if multishot is active, spawn additional bullets
