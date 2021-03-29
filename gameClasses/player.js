@@ -8,7 +8,8 @@ class Player {
         this.hook = new Gun(this, scene, 'bullet');
         this.gravGrenade = new Gun(this, scene, 'default');
         this.ricochet = new Gun(this, scene, 'bullet');
-        this.gunArray = [this.gun, this.hook, this.ricochet];
+        this.launcher = new Launcher(this, scene, 'missile');
+        this.gunArray = [this.gun, this.hook, this.ricochet, this.launcher];
         this.gunIndex = 0;
         
         this.multiShotTimer = 5;

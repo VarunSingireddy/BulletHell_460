@@ -131,14 +131,16 @@ const config = {
                 player.spawnGravityGrenade(false);
             });
 
-
             //this.input.keyboard.cursorKeys.on('keydown',function (event) { console.log("down");});
+            
 
 
 
             this.bullets = this.physics.add.group();
             this.powerups = this.physics.add.group();
-
+            this.enemies = this.physics.add.group();
+            this.explosions = this.physics.add.group();
+            
             //this.bullets.defaults.allowGravity = false;
             //console.log(this.bullets.defaults);
 
@@ -149,7 +151,6 @@ const config = {
                 let angle = Phaser.Math.Angle.Between(entity.x, entity.y, this.input.mousePointer.x, this.input.mousePointer.y);
 
                 // angle += Math.PI*.5;
-
 
                 return angle;
             }
