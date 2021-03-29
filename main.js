@@ -15,7 +15,7 @@ const config = {
         preload: function () { //constructor equivilent//loads assets'
             this.load.image('default', 'data/default.png');
             this.load.image('bullet', 'data/bullet.png');
-
+            this.load.image('missile', 'data/missile.png');
 
 
 
@@ -27,14 +27,8 @@ const config = {
             
             this.powerupArray = [];
             
-
             var player = this.player;
             
-            
-            
-
-
-
             this.input.keyboard.on('keydown-' + 'W', (e) => {
                 player.setDirFlags(1, true);
             });
@@ -113,20 +107,15 @@ const config = {
                 this.spawnPowerup('bullet');
             });
 
-
             //this.input.keyboard.cursorKeys.on('keydown',function (event) { console.log("down");});
             
             this.bullets = this.physics.add.group();
             this.powerups = this.physics.add.group();
-
             this.enemies = this.physics.add.group();
+            this.explosions = this.physics.add.group();
             
             //this.bullets.defaults.allowGravity = false;
             //console.log(this.bullets.defaults);
-
-
-
-            //this.physics.
 
             this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -135,7 +124,6 @@ const config = {
                 let angle = Phaser.Math.Angle.Between(entity.x, entity.y, this.input.mousePointer.x, this.input.mousePointer.y);
 
                 // angle += Math.PI*.5;
-
 
                 return angle;
             }

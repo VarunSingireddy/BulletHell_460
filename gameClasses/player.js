@@ -6,7 +6,8 @@ class Player {
         this.dir = new Phaser.Math.Vector2(0, 0);
         this.gun = new Gun(this, scene,'default');
         this.hook = new Gun(this, scene, 'bullet');
-        this.gunArray = [this.gun, this.hook];
+        this.launcher = new Launcher(this, scene, 'missile');
+        this.gunArray = [this.gun, this.hook, this.launcher];
         this.gunIndex = 0;
         
         this.powerupFlags = {

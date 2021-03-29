@@ -20,7 +20,7 @@ class Projectile{
         this.entity = entity;
         this.entity.body.allowGravity = false;
         
-        this.setVelocityTwoardMouse();  
+        this.setVelocityTowardMouse();  
     }//init()
     
     update(){//this is called in the gun update
@@ -45,9 +45,8 @@ class Projectile{
         this.entity.destroy();
     }//onDie()
     
-    setVelocityTwoardMouse(){
+    setVelocityTowardMouse(){
         this.angle = this.scene.angleToMouseRad(this.entity);
-        
         if(this.isLeftSplit) this.angle += this.splitAngleChange;
         if(this.isRightSplit) this.angle += -this.splitAngleChange;
         
@@ -58,8 +57,17 @@ class Projectile{
         
         this.entity.body.setVelocity(this.velocity.x,this.velocity.y);
         
-    }//setVelocityTwoardMouse()
+    }//setVelocityTowardMouse()
     
-    
+    setVelocityTowardTarget(target) {
+        let dx = target.x - this.x;
+        let dy = target.y - this.y;
+        this.angle = Math.atan2(dy, dx);
+        
+        this.velocity.x = this.speed * Math.cos(this.angle);
+        this.velocity.y = this.speed * Math.sin(this.angle);
+        
+        this.entity.body.setVelocity(this.velocity.x, this.velocity.y);
+    }
     
 }
