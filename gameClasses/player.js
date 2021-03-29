@@ -4,12 +4,12 @@ class Player {
         this.speed = new Phaser.Math.Vector2(450.0, 450.0); //300;
         this.velocity = new Phaser.Math.Vector2(0, 0);
         this.dir = new Phaser.Math.Vector2(0, 0);
-        this.gun = new Gun(this, scene, 'default');
-        this.hook = new Gun(this, scene, 'bullet');
-        this.gravGrenade = new Gun(this, scene, 'default');
-        this.ricochet = new Gun(this, scene, 'bullet');
+        this.gun = new Gun(this, scene, 'default', 'normal');
+        this.hook = new Gun(this, scene, 'bullet', 'hook');
+        this.gravGrenade = new Gun(this, scene, 'default', 'gravGrenade');
+        this.ricochet = new Gun(this, scene, 'bullet', 'ricochet');
+        this.gunArray = [this.gun, this.hook, this.ricochet, this.gravGrenade];
         this.launcher = new Launcher(this, scene, 'missile');
-        this.gunArray = [this.gun, this.hook, this.ricochet, this.launcher];
         this.gunIndex = 0;
         
         this.multiShotTimer = 5;

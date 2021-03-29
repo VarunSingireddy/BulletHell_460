@@ -11,7 +11,7 @@ class Gun {
     }
     
 
-    constructor(owner, scene, img) {
+    constructor(owner, scene, img, gunType) {
         this.scene = scene;
         this.owner = owner;
         this.entity; //set in the player
@@ -20,6 +20,7 @@ class Gun {
         this.shootDownPrev = false; //not used in the
         this.projectiles = [];
         this.img = img;
+        this.gunType = gunType;
     }
 
     init(entity) {
@@ -45,8 +46,24 @@ class Gun {
         //console.log("BANG");
         if (bool) {
             let bulletIndex = this.nextBulletIndex;
+            let bullet;
             
-            let bullet = new GravGrenade(this, this.scene, this.owner.powerupFlags);
+            if(this.gunType == 'normal')
+            {
+                bullet = new Projectile(this, this.scene, this.owner.powerupFlags);
+            }
+            else if(this.gunType == 'hook')
+            {
+                bullet = new Hook(this, this.scene, this.owner.powerupFlags);
+            }
+            else if(this.gunType == 'gravGrenade')
+            {
+                bullet = new GravGrenade(this, this.scene, this.owner.powerupFlags);
+            }
+            else if(this.gunType == 'ricochet')
+            {
+                bullet = new Ricochet(this, this.scene, this.owner.powerupFlags);
+            }
             //console.log(this.owner);
             bullet.init(this.scene.bullets.create(this.entity.x,this.entity.y, this.img));//'default'));
             bullet.onFire();
