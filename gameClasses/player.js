@@ -4,16 +4,16 @@ class Player {
         this.speed = new Phaser.Math.Vector2(450.0, 450.0); //300;
         this.velocity = new Phaser.Math.Vector2(0, 0);
         this.dir = new Phaser.Math.Vector2(0, 0);
-        this.ricochet = new Gun(this, scene, 'bullet');
-        this.gunArray = [this.gun, this.hook, this.ricochet];
-        this.gunIndex = 0;
         this.gun = new Gun(this, scene, 'default');
         this.hook = new Gun(this, scene, 'bullet');
         this.gravGrenade = new Gun(this, scene, 'default');
+        this.ricochet = new Gun(this, scene, 'bullet');
+        this.gunArray = [this.gun, this.hook, this.ricochet];
+        this.gunIndex = 0;
+        
         this.multiShotTimer = 5;
         this.portalTimer = 5;
         this.slowPocketsTimer = 5;
-
 
         this.powerupFlags = {
             portal: false,
@@ -42,19 +42,14 @@ class Player {
         this.gun.init(this.scene.add.image(this.entity.x, this.entity.y, 'bullet'));
         this.hook.init(this.scene.add.image(this.entity.x, this.entity.y, 'bullet'));
         this.gravGrenade.init(this.scene.add.image(this.entity.x, this.entity.y, null));
+        this.ricochet.init(this.scene.add.image(this.entity.x, this.entity.y, 'bullet'));
+
 
         console.log(this.entity);
 
     } //init()
 
-        this.gun.init(this.scene.add.image(this.entity.x, this.entity.y, 'bullet'));
-        this.hook.init(this.scene.add.image(this.entity.x, this.entity.y, 'bullet'));
-        this.ricochet.init(this.scene.add.image(this.entity.x, this.entity.y, 'bullet'));
 
-        //console.log(this.entity);
-
-    } //init()
->>>>>>> Stashed changes
 
     update(dt) {
         this.handleDirection();
@@ -72,15 +67,14 @@ class Player {
 
         this.gun.update(dt);
         this.hook.update(dt);
+        this.ricochet.update(dt);
         this.gravGrenade.update(dt);
         this.updatePowerupFlags(dt);
 
         this.dir.set(0, 0);
     } //update()
 
-        this.dir.set(0, 0);
-    } //update()
->>>>>>> Stashed changes
+
 
     setDirFlags(int, bool) {
 
@@ -138,13 +132,13 @@ class Player {
     } //handleDirection()
 
     updatePowerupFlags(dt) {
-        if(this.powerupFlags.multiShot) {
+        if (this.powerupFlags.multiShot) {
             console.log(this.multiShotTimer);
             this.multiShotTimer -= dt;
-            if(this.multiShotTimer <= 0) this.powerupFlags.multiShot = false;
+            if (this.multiShotTimer <= 0) this.powerupFlags.multiShot = false;
         }
     }
-    
+
     spawnGravityGrenade(bool) {
         this.gravGrenade.fire(bool)
     }

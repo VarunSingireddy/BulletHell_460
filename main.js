@@ -23,14 +23,9 @@ const config = {
 
             this.powerupArray = [];
 
-
             var player = this.player;
-
-
-
-
-
-
+            
+            
             this.input.keyboard.on('keydown-' + 'W', (e) => {
                 player.setDirFlags(1, true);
             });
@@ -117,7 +112,7 @@ const config = {
 
 
             //this.input.keyboard.cursorKeys.on('keydown',function (event) { console.log("down");});
-            
+
 
 
             this.bullets = this.physics.add.group();
@@ -171,7 +166,7 @@ const config = {
             //console.log(this.angleToMouse(player.entity));
 
         },
-        
+
         update: function (time, delta) {
 
             this.player.update(delta / 1000);
@@ -181,8 +176,8 @@ const config = {
                 this.powerupArray[i].update();
                 if (this.powerupArray[i].delete) {
                     {
-                        this.powerupArray[i].onDie(); 
-                        this.powerupArray.splice(i, 1); 
+                        this.powerupArray[i].onDie();
+                        this.powerupArray.splice(i, 1);
                         --i;
                     }
                 }
@@ -191,7 +186,7 @@ const config = {
             //this.player
 
         },
-<<<<<<< Updated upstream
+
 
 
 
