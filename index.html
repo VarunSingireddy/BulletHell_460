@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>BULLET HELL!</title>
 </head>
+
 <body>
-   <!-- load phaser first -->
-   <script src="phaser.min.js"></script>
+    <canvas id="game" style="margin: 0px auto"></canvas>
    <script src="idHelper.js"></script>
+    <!-- load phaser first -->
+    <script src="phaser.min.js"></script>
    
    
    <!-- load enemies -->
@@ -15,16 +18,19 @@
    
    
    <!-- load projectiles before guns -->
-   <script src="gameClasses/projectiles/projectile.js"></script>
-   
-   
-   <!-- load gun before player -->
-   <script src="gameClasses/guns/gun.js"></script>
-   
-   
-   <!-- load enemies -->
+    <!-- load projectiles before guns -->
+    <script src="gameClasses/projectiles/projectile.js"></script>
+    <script src="gameClasses/projectiles/hook.js"></script>
+    <script src="gameClasses/projectiles/ricochet.js"></script>
+    <script src="gameClasses/projectiles/gravGrenade.js"></script>
+
+
+    <!-- load gun before player -->
+    <script src="gameClasses/guns/gun.js"></script>
    <script src="gameClasses/enemies/enemy.js"></script>
    <script src="gameClasses/enemies/enemyManager.js"></script>
+
+
    
    
    <!-- load player -->
