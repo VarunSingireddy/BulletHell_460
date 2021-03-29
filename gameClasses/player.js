@@ -4,10 +4,11 @@ class Player {
         this.speed = new Phaser.Math.Vector2(450.0, 450.0); //300;
         this.velocity = new Phaser.Math.Vector2(0, 0);
         this.dir = new Phaser.Math.Vector2(0, 0);
+        this.ricochet = new Gun(this, scene, 'bullet');
+        this.gunArray = [this.gun, this.hook, this.ricochet];
+        this.gunIndex = 0;
         this.gun = new Gun(this, scene, 'default');
         this.hook = new Gun(this, scene, 'bullet');
-        this.gunArray = [this.gun, this.hook];
-        this.gunIndex = 0;
         this.gravGrenade = new Gun(this, scene, 'default');
         this.multiShotTimer = 5;
         this.portalTimer = 5;
@@ -46,6 +47,15 @@ class Player {
 
     } //init()
 
+        this.gun.init(this.scene.add.image(this.entity.x, this.entity.y, 'bullet'));
+        this.hook.init(this.scene.add.image(this.entity.x, this.entity.y, 'bullet'));
+        this.ricochet.init(this.scene.add.image(this.entity.x, this.entity.y, 'bullet'));
+
+        //console.log(this.entity);
+
+    } //init()
+>>>>>>> Stashed changes
+
     update(dt) {
         this.handleDirection();
         //console.log(dt);
@@ -67,6 +77,10 @@ class Player {
 
         this.dir.set(0, 0);
     } //update()
+
+        this.dir.set(0, 0);
+    } //update()
+>>>>>>> Stashed changes
 
     setDirFlags(int, bool) {
 
