@@ -66,9 +66,9 @@ class Gun {
             this.changedVelocity = new Phaser.Math.Vector2(0, 0);
 
             //console.log(bulletIndex);
-            this.projectiles[bulletIndex] = bullet;
+            //this.projectiles[bulletIndex] = bullet;
             bullet.entity.name = bulletIndex;
-            //this.projectiles.push(bullet);
+            this.projectiles.push(bullet);
 
 
             //if multishot is active, spawn additional bullets

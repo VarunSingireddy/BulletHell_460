@@ -51,6 +51,7 @@ class Projectile {
         this.velocity.y = this.speed * Math.sin(this.angle);   
         
         this.entity.body.setVelocity(this.velocity.x,this.velocity.y);
+        this.entity.angle = this.owner.entity.angle;
         
     }//setVelocityTowardMouse()
     

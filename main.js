@@ -17,7 +17,7 @@ const config = {
         preload: function () { //constructor equivilent//loads assets'
             this.load.image('default', 'data/default.png');
             this.load.image('bullet', 'data/bullet.png');
-            
+            this.load.image('hook', 'data/Hook.png');
             this.load.image('delicousTeeth','data/FrogBoss.png');
 
             

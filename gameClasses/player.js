@@ -5,7 +5,7 @@ class Player {
         this.velocity = new Phaser.Math.Vector2(0, 0);
         this.dir = new Phaser.Math.Vector2(0, 0);
         this.gun = new Gun(this, scene, 'default', 'normal');
-        this.hook = new Gun(this, scene, 'bullet', 'hook');
+        this.hook = new Gun(this, scene, 'hook', 'hook');
         this.gravGrenade = new Gun(this, scene, 'default', 'gravGrenade');
         this.ricochet = new Gun(this, scene, 'bullet', 'ricochet');
         this.launcher = new Launcher(this, scene, 'missile');

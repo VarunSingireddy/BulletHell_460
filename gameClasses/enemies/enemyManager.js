@@ -49,19 +49,35 @@ class EnemyManager {
 
     hitBullet(bullet, enemy) {
         
-        console.log("index: " + enemy.name);
+        //console.log("index: " + enemy.name);
         
-        let en = this.enemies[enemy.name]; 
-        console.log(en);
-        let bl = this.player.gun.projectiles[bullet.name];
-
+        let en = this.enemies[enemy.name];
+        let bl;// = this.player.gun.projectiles[bullet.name];
+        
+        //search through the guns array and their respective projectiles array to find THIS bullet
+        let found = false;
+        for(let i = 0; i < this.player.gunArray.length; ++i)
+        {
+            for(let j = 0; j < this.player.gunArray[i].projectiles.length; ++j)//O(n^2) time. Gross
+            {
+                if(bullet == this.player.gunArray[i].projectiles[j].entity)
+                {
+                    bl = this.player.gunArray[i].projectiles[j];
+                    found = true;
+                    break;
+                }
+            }
+            if(found) break;
+        }
+        
         if (en && bl) {
             en.reciveDamage(10);
-            bl.delete = true;
+            //bl.delete = true;     SHOULD SET DELETE FROM PROJECTILE'S ONHIT() INSTEAD OF HERE
+            bl.onHit();
         }
         //asconsole.log("suck");
 
-    }
+    }//hitBullet()
 
     addEnemy() { //TODO: pass in the type of enemy to spawn and it's position
         let en = new Enemy(this.player, this.scene);
