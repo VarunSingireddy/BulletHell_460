@@ -60,9 +60,9 @@ class Player {
             this.entity.body.setVelocity(this.dir.x, this.dir.y);
         }
 
-        this.gun.update();
-        this.hook.update();
-        this.gravGrenade.update();
+        this.gun.update(dt);
+        this.hook.update(dt);
+        this.gravGrenade.update(dt);
         this.updatePowerupFlags(dt);
 
         this.dir.set(0, 0);

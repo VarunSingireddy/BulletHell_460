@@ -16,7 +16,7 @@ class Gun {
         
     }//init()
 
-    update() {
+    update(dt) {
         //I don't know why this causes easing but it does and I dig it
         this.entity.x = this.owner.entity.x;
         this.entity.y = this.owner.entity.y;
@@ -24,7 +24,7 @@ class Gun {
         //console.log(this.scene.angleToMouse(this.entity));
         this.entity.angle = this.scene.angleToMouseDeg(this.entity) + 90;
 
-        this.updateProjectiles();
+        this.updateProjectiles(dt);
 
 
         this.shootDownPrev = this.shootDown;
@@ -33,7 +33,7 @@ class Gun {
     fire(bool) {
         //console.log("BANG");
         if (bool) {
-            let bullet = new Projectile(this, this.scene, this.owner.powerupFlags);
+            let bullet = new GravGrenade(this, this.scene, this.owner.powerupFlags);
             //console.log(this.owner);
             bullet.init(this.scene.bullets.create(this.entity.x,this.entity.y, this.img));//'default'));
             bullet.onFire();
@@ -63,11 +63,11 @@ class Gun {
 
     }//fire()
     
-    updateProjectiles()
+    updateProjectiles(dt)
     {
         for(let i = 0; i < this.projectiles.length; ++i)
         {
-            this.projectiles[i].update();
+            this.projectiles[i].update(dt);
             if(this.projectiles[i].delete)
             {
                 this.projectiles[i].onDie();//kill bullet

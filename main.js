@@ -1,7 +1,7 @@
 const config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: 1280,
+    height: 720,
     physics: {
         default: 'arcade', //this can be set to 'arcade' 'impact or 'matter' 
         arcade: {
@@ -24,14 +24,14 @@ const config = {
         create: function () {
             this.player = new Player(this);
             this.player.init(this.physics.add.image(400, 300, 'default'));
-            
+
             this.powerupArray = [];
-            
+
 
             var player = this.player;
-            
-            
-            
+
+
+
 
 
 
@@ -150,7 +150,7 @@ const config = {
 
                 return angle *= Phaser.Math.RAD_TO_DEG;
             }
-            
+
             this.spawnPowerup = function (img) {
                 let powerup = new Powerup(this);
 
@@ -161,7 +161,7 @@ const config = {
                 //powerup.gravity = 0;
                 this.powerupArray.push(powerup);
             }
-            
+
             /*this.updatePowerups = function () {
                 
                 for(var i = 0; i < this.powerupArray.length; i++){
@@ -173,25 +173,32 @@ const config = {
                 
             }*/
 
-            
+
 
             //console.log(this.angleToMouse(player.entity));
 
         },
         update: function (time, delta) {
 
-            this.player.update(delta / 1000);   
+            this.player.update(delta / 1000);
             this.physics.add.overlap(this.player.entity, this.powerups, powerupCollisionHandler, null, this);
-            
-            for(i = 0; i < this.powerupArray.length; i++) {
+
+            for (i = 0; i < this.powerupArray.length; i++) {
                 this.powerupArray[i].update();
+                if (this.powerupArray[i].delete) {
+                    {
+                        this.powerupArray[i].onDie(); 
+                        this.powerupArray.splice(i, 1); 
+                        --i;
+                    }
+                }
             }
             //this.updatePowerups();     
             //this.player
 
         },
-        
-        
+
+
 
 
 
@@ -201,9 +208,10 @@ const config = {
 
 function powerupCollisionHandler(player, powerup) {
     console.log(powerup)
-    
+    this.powerups.indexOf(powerup);
+
     //powerup.setPlayerPowerup();
-    
+
 }
 
 

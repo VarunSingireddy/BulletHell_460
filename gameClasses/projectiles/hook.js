@@ -7,7 +7,7 @@ class Hook extends Projectile
         this.velocity = new Phaser.Math.Vector2(0,0);
         this.delete = false;*/
         
-        super();
+        super(owner, scene, powerupFlags);
     }//constructor()
     
     init(entity){
@@ -17,7 +17,7 @@ class Hook extends Projectile
         this.setVelocityTwoardMouse();  
     }//init()
     
-    update(){//this is called in the gun update
+    update(dt){//this is called in the gun update
         if(this.entity.x < 0 || this.entity.x > 800 || this.entity.y < 0 || this.entity.y > 600)
         {
             this.delete = true;
