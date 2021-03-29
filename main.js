@@ -1,7 +1,8 @@
 const config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: 1280,
+    height: 720,
+    canvas: document.querySelector('game'),
     physics: {
         default: 'arcade', //this can be set to 'arcade' 'impact or 'matter' 
         arcade: {
@@ -15,21 +16,12 @@ const config = {
         preload: function () { //constructor equivilent//loads assets'
             this.load.image('default', 'data/default.png');
             this.load.image('bullet', 'data/bullet.png');
-
-
-            
-
-
         },
         create: function () {
             this.player = new Player(this);
-            this.player.init(this.physics.add.image(400, 300, 'default'));
-            
-            
+            this.player.init(this.physics.add.image(640, 360, 'default'));
 
             var player = this.player;
-            
-            
             
             this.input.keyboard.on('keydown-' + 'W', (e)=>{player.setDirFlags(1,true);});
             this.input.keyboard.on('keyup-' + 'W', (e) => {player.setDirFlags(1,false);});
@@ -57,18 +49,19 @@ const config = {
             this.input.on('pointerdown', (e)=>{player.fire(true);});
             this.input.on('pointerup', (e)=>{player.fire(false);});
             
+<<<<<<< Updated upstream
+=======
+            //switch guns
+            this.input.keyboard.on('keydown-' + 'R', (e)=>{player.switchGun(1);});
+            this.input.keyboard.on('keydown-' + 'E', (e)=>{player.switchGun(-1);});
+>>>>>>> Stashed changes
 
             //this.input.keyboard.cursorKeys.on('keydown',function (event) { console.log("down");});
-            
             
             this.bullets = this.physics.add.group();
             
             //this.bullets.defaults.allowGravity = false;
             //console.log(this.bullets.defaults);
-            
-
-
-            //this.physics.
 
             this.cursors = this.input.keyboard.createCursorKeys();
             
@@ -91,6 +84,7 @@ const config = {
             //console.log(this.angleToMouse(player.entity));
 
         },
+        
         update: function (time, delta) {
 
             this.player.update(delta / 1000);
@@ -98,12 +92,13 @@ const config = {
             
 
         },
+<<<<<<< Updated upstream
 
 
     }
+=======
+    }//scene
+>>>>>>> Stashed changes
 };
-
-
-
 
 const game = new Phaser.Game(config);
