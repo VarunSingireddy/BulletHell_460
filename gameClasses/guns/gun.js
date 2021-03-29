@@ -44,34 +44,41 @@ class Gun {
     fire(bool) {
         //console.log("BANG");
         if (bool) {
+            let bulletIndex = this.nextBulletIndex;
+            
             let bullet = new GravGrenade(this, this.scene, this.owner.powerupFlags);
             //console.log(this.owner);
             bullet.init(this.scene.bullets.create(this.entity.x,this.entity.y, this.img));//'default'));
             bullet.onFire();
-
-            let bulletIndex = this.nextBulletIndex;
+            
             //console.log(bulletIndex);
             this.projectiles[bulletIndex] = bullet;
             bullet.entity.name = bulletIndex;
-            this.projectiles.push(bullet);
+            //this.projectiles.push(bullet);
 
 
             //if multishot is active, spawn additional bullets
             //console.log(this.owner.powerupFlags.multiShot);            
             if (this.owner.powerupFlags.multiShot) {
+                let bulletIndexL = this.nextBulletIndex;
+                let bulletIndexR = this.nextBulletIndex;
                 //spawn Left Split
                 let bulletL = new Projectile(this, this.scene, this.owner.powerupFlags);
                 bulletL.isLeftSplit = true;
                 bulletL.init(this.scene.bullets.create(this.entity.x, this.entity.y, this.img));
                 bulletL.onFire();
-                this.projectiles.push(bulletL);
+                this.projectiles[bulletIndexL] = bulletL;
+                bulletL.entity.name = bulletIndexL;
+                //this.projectiles.push(bulletL);
 
                 //spawn Right Split
                 let bulletR = new Projectile(this, this.scene, this.owner.powerupFlags);
                 bulletR.isRightSplit = true;
                 bulletR.init(this.scene.bullets.create(this.entity.x, this.entity.y, this.img));
                 bulletR.onFire();
-                this.projectiles.push(bulletR);
+                this.projectiles[bulletIndexR] = bulletR;
+                bulletR.entity.name = bulletIndexR;
+                //this.projectiles.push(bulletR);
             }
         }
 
@@ -79,7 +86,7 @@ class Gun {
 
     }
 
-    updateProjectiles() {
+    updateProjectiles(dt) {
         for (let i = 0; i < this.projectiles.length; ++i) {
             if (this.projectiles[i]) {
                 this.projectiles[i].update(dt);
