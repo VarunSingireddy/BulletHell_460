@@ -18,7 +18,7 @@ class Hook extends Projectile
     }//init()
     
     update(dt){//this is called in the gun update
-        if(this.entity.x < 0 || this.entity.x > 800 || this.entity.y < 0 || this.entity.y > 600)
+        if(this.entity.x < 0 || this.entity.x > this.scene.width || this.entity.y < 0 || this.entity.y > this.scene.height)
         {
             this.delete = true;
         }

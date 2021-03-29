@@ -15,7 +15,7 @@ class GravGrenade extends Projectile {
         this.entity.body.allowDrag = true;
         this.entity.body.drag = new Phaser.Math.Vector2(500,500);
 
-        this.setVelocityTwoardMouse();
+        this.setVelocityTowardMouse();
     } //init()
 
     update(dt) { //this is called in the gun update
@@ -49,7 +49,7 @@ class GravGrenade extends Projectile {
         //if they are within the radius of gravity, suck them to grav hole
     }
 
-    setVelocityTwoardMouse() {
+    setVelocityTowardMouse() {
         this.angle = this.scene.angleToMouseRad(this.entity);
 
         this.velocity.x = this.speed * Math.cos(this.angle);

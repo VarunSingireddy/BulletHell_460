@@ -9,7 +9,7 @@ class Gun {
 
         return ++Gun._bulletIdCount;
     }
-    
+
 
     constructor(owner, scene, img, gunType) {
         this.scene = scene;
@@ -21,12 +21,14 @@ class Gun {
         this.projectiles = [];
         this.img = img;
         this.gunType = gunType;
+        this.bounceTimes = 0;
+        this.changedVelocity = new Phaser.Math.Vector2(0, 0);
     }
 
     init(entity) {
         this.entity = entity;
-        
-    }//init()
+
+    } //init()
 
     update(dt) {
         //I don't know why this causes easing but it does and I dig it
@@ -40,34 +42,29 @@ class Gun {
 
 
         this.shootDownPrev = this.shootDown;
-    }//update()
+    } //update()
 
     fire(bool) {
         //console.log("BANG");
         if (bool) {
             let bulletIndex = this.nextBulletIndex;
             let bullet;
-            
-            if(this.gunType == 'normal')
-            {
+
+            if (this.gunType == 'normal') {
                 bullet = new Projectile(this, this.scene, this.owner.powerupFlags);
-            }
-            else if(this.gunType == 'hook')
-            {
+            } else if (this.gunType == 'hook') {
                 bullet = new Hook(this, this.scene, this.owner.powerupFlags);
-            }
-            else if(this.gunType == 'gravGrenade')
-            {
+            } else if (this.gunType == 'gravGrenade') {
                 bullet = new GravGrenade(this, this.scene, this.owner.powerupFlags);
-            }
-            else if(this.gunType == 'ricochet')
-            {
-                bullet = new Ricochet(this, this.scene, this.owner.powerupFlags);
+            } else if (this.gunType == 'ricochet') {
+                bullet = new Ricochet(this, this.scene, this.owner.powerupFlags, this.bounceTimes, this.changedVelocity);
             }
             //console.log(this.owner);
-            bullet.init(this.scene.bullets.create(this.entity.x,this.entity.y, this.img));//'default'));
+            bullet.init(this.scene.bullets.create(this.entity.x, this.entity.y, this.img)); //'default'));
             bullet.onFire();
-            
+            this.bounceTimes = 0;
+            this.changedVelocity = new Phaser.Math.Vector2(0, 0);
+
             //console.log(bulletIndex);
             this.projectiles[bulletIndex] = bullet;
             bullet.entity.name = bulletIndex;
@@ -114,5 +111,5 @@ class Gun {
                 }
             }
         }
-    }//updateProjectiles()
+    } //updateProjectiles()
 }
