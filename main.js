@@ -1,7 +1,8 @@
+
 const config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: 1280,
+    height: 720,
     physics: {
         default: 'arcade', //this can be set to 'arcade' 'impact or 'matter' 
         arcade: {
@@ -15,7 +16,8 @@ const config = {
         preload: function () { //constructor equivilent//loads assets'
             this.load.image('default', 'data/default.png');
             this.load.image('bullet', 'data/bullet.png');
-
+            
+            this.load.image('delicousTeeth','data/FrogBoss.png');
 
             
 
@@ -25,8 +27,6 @@ const config = {
             this.player = new Player(this);
             this.player.init(this.physics.add.image(400, 300, 'default'));
             
-            
-
             var player = this.player;
             
             
@@ -53,7 +53,6 @@ const config = {
             
             this.input.keyboard.on('keydown-' + 'SPACE', (e)=>{player.fire(true);});
             this.input.keyboard.on('keyup-' + 'SPACE', (e) => {player.fire(false);});
-            
             this.input.on('pointerdown', (e)=>{player.fire(true);});
             this.input.on('pointerup', (e)=>{player.fire(false);});
             
@@ -62,6 +61,16 @@ const config = {
             
             
             this.bullets = this.physics.add.group();
+            
+            
+           // this.testEnemy = new Enemy(this,this.player); 
+            
+            //let e1 = this.enemies.create(400,300,'delicousTeeth');
+            //this.testEnemy.init(e1);
+            //e1.init()
+            
+            
+            
             
             //this.bullets.defaults.allowGravity = false;
             //console.log(this.bullets.defaults);
@@ -89,19 +98,34 @@ const config = {
             }
 
             //console.log(this.angleToMouse(player.entity));
+            
+            this.enemyManager = new EnemyManager(player,this);
+            this.enemyManager.init();
+            this.enemyManager.addEnemy();
+            this.enemyManager.addEnemy();
+            this.enemyManager.addEnemy();
+            this.enemyManager.addEnemy();
+            this.enemyManager.addEnemy();
+            
+            //enemyManager.addEnemy();
 
         },
         update: function (time, delta) {
-
+            
             this.player.update(delta / 1000);
+            this.enemyManager.update();
+            
             //this.player
-            console.log(this.player.gun.projectiles.length);
-
+            //console.log(this.player.gun.projectiles.length);
+            
+            
         },
 
 
     }
 };
+
+
 
 
 

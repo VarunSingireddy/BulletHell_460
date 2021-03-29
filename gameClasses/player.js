@@ -4,6 +4,7 @@ class Player {
         this.speed = new Phaser.Math.Vector2(450.0, 450.0); //300;
         this.velocity = new Phaser.Math.Vector2(0, 0);
         this.dir = new Phaser.Math.Vector2(0, 0);
+        
         this.gun = new Gun(this,scene);
         
         this.powerupFlags = {

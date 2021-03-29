@@ -10,10 +10,7 @@ class Projectile{
         this.velocity = new Phaser.Math.Vector2(0,0);
         this.delete = false;
        // console.log(scene);d
-        
-        //this.
-        
-        
+ 
     }
     
     init(entity){
@@ -44,6 +41,7 @@ class Projectile{
         this.scene = null;
         this.entity.destroy();
     }
+    
     
     setVelocityTwoardMouse(){
         this.angle = this.scene.angleToMouseRad(this.entity);
