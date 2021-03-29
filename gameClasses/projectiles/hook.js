@@ -34,9 +34,10 @@ class Hook extends Projectile
     
     onDie(){
         //this.entity = null;
-        this.owner = null;
+        /*this.owner = null;
         this.scene = null;
-        this.entity.destroy();
+        this.entity.destroy();*/
+        this.movePlayer();
     }//onDie()
     
     setVelocityTwoardMouse(){
@@ -49,4 +50,17 @@ class Hook extends Projectile
         this.entity.body.setVelocity(this.velocity.x,this.velocity.y);
         
     }//setVelocityTwoardMouse()
+    
+    movePlayer()
+    {
+        let p = this.owner.owner;
+        let xTarget = this.entity.body.x - p.entity.body.x;
+        let yTarget = this.entity.body.y - p.entity.body.y;
+        let hyp = Math.sqrt(Math.pow(xTarget, 2) + Math.pow(yTarget, 2));
+        xTarget /= hyp;
+        yTarget /= hyp;
+        
+        let speed = 1000;
+        this.owner.owner.entity.body.setVelocity(xTarget * speed, yTarget * speed);
+    }
 }
