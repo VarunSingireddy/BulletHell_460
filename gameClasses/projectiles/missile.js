@@ -40,6 +40,7 @@ class Missile extends Projectile {
             if (distanceToEnemy < distanceToClosestEnemy) {
                 distanceToClosestEnemy = distanceToEnemy;
                 this.closestEnemy = this.enemiesCopy[i];
+                console.log(this.closestEnemy);
             }
         }
     }

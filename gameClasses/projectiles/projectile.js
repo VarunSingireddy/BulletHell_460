@@ -63,6 +63,7 @@ class Projectile {
         this.entity.destroy();
     }//onDie()
 
+
     setVelocityTowardMouse() {
 
         this.angle = this.scene.angleToMouseRad(this.entity);
@@ -79,8 +80,8 @@ class Projectile {
     }//setVelocityTowardMouse()
     
     setVelocityTowardTarget(target) {
-        let dx = target.x - this.x;
-        let dy = target.y - this.y;
+        let dx = target.x - this.entity.x;
+        let dy = target.y - this.entity.y;
         this.angle = Math.atan2(dy, dx);
         
         this.velocity.x = this.speed * Math.cos(this.angle);
