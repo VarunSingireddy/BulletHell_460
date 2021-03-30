@@ -4,7 +4,8 @@ class GravGrenade extends Projectile {
         
         
         this.lifeTimer = 3;
-        this.radius = 50;
+        this.radius = 200;
+        this.enableGravPull = false;
 
         
     } //constructor()
@@ -21,7 +22,8 @@ class GravGrenade extends Projectile {
     update(dt) { //this is called in the gun update
         super.update(dt);   
         this.lifeTimer -= dt;        
-        if(this.lifeTimer <= 2) this.doGravity();
+        if(this.lifeTimer <= 2) this.enableGravPull = true;
+        if(this.enableGravPull) this.doGravity();
         if(this.lifeTimer < 0) this.delete = true;
         /*if (this.entity.x < 0 || this.entity.x > 800 || this.entity.y < 0 || this.entity.y > 600) {
             this.delete = true;

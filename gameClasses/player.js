@@ -9,9 +9,9 @@ class Player {
         this.gravGrenade = new Gun(this, scene, 'default', 'gravGrenade');
         this.ricochet = new Gun(this, scene, 'bullet', 'ricochet');
         this.launcher = new Launcher(this, scene, 'missile');
-        this.gunArray = [this.gun, this.hook, this.ricochet, this.gravGrenade, this.launcher];
+        this.gunArray = [this.gun, this.hook, this.ricochet, this.launcher];
         this.gunIndex = 0;
-        
+
         this.multiShotTimer = 5;
         this.portalTimer = 5;
         this.slowPocketsTimer = 5;
@@ -46,7 +46,7 @@ class Player {
         this.ricochet.init(this.scene.add.image(this.entity.x, this.entity.y, 'bullet'));
 
 
-        console.log(this.entity);
+        //console.log(this.entity);
 
     } //init()
 
@@ -71,6 +71,9 @@ class Player {
         this.ricochet.update(dt);
         this.gravGrenade.update(dt);
         this.updatePowerupFlags(dt);
+
+        //console.log(this.gun.projectiles.length);
+
 
         this.dir.set(0, 0);
     } //update()
@@ -108,7 +111,7 @@ class Player {
         this.gunIndex += i;
         if (this.gunIndex < 0) this.gunIndex = this.gunArray.length - 1;
         else if (this.gunIndex == this.gunArray.length) this.gunIndex = 0;
-        console.log("Using gun " + this.gunIndex);
+        console.log("Using gun " + this.gunArray[this.gunIndex].gunType);
     } //switchGun()
 
 
@@ -134,7 +137,7 @@ class Player {
 
     updatePowerupFlags(dt) {
         if (this.powerupFlags.multiShot) {
-            console.log(this.multiShotTimer);
+            //console.log(this.multiShotTimer);
             this.multiShotTimer -= dt;
             if (this.multiShotTimer <= 0) this.powerupFlags.multiShot = false;
         }

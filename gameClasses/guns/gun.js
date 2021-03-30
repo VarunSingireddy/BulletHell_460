@@ -38,7 +38,7 @@ class Gun {
         //console.log(this.scene.angleToMouse(this.entity));
         this.entity.angle = this.scene.angleToMouseDeg(this.entity) + 90;
 
-        this.updateProjectiles(dt);
+        this.updateProjectiles(dt);            
 
 
         this.shootDownPrev = this.shootDown;
@@ -46,7 +46,7 @@ class Gun {
 
     fire(bool) {
         //console.log("BANG");
-        if (bool) {
+        if (bool && !this.shootDown) {
             let bulletIndex = this.nextBulletIndex;
             let bullet;
 
@@ -66,7 +66,8 @@ class Gun {
             this.changedVelocity = new Phaser.Math.Vector2(0, 0);
 
             //console.log(bulletIndex);
-            this.projectiles[bulletIndex] = bullet;
+            //this.projectiles[bulletIndex] = bullet;
+            this.projectiles.push(bullet);
             bullet.entity.name = bulletIndex;
             //this.projectiles.push(bullet);
 
@@ -74,25 +75,41 @@ class Gun {
             //if multishot is active, spawn additional bullets
             //console.log(this.owner.powerupFlags.multiShot);            
             if (this.owner.powerupFlags.multiShot) {
+                let bulletL;
+                let bulletR;
+
+                if (this.gunType == 'normal') {
+                    bulletL = new Projectile(this, this.scene, this.owner.powerupFlags);
+                    bulletR = new Projectile(this, this.scene, this.owner.powerupFlags);
+                } else if (this.gunType == 'hook') {
+                    //bulletL = new Hook(this, this.scene, this.owner.powerupFlags);
+                    //bulletR = new Hook(this, this.scene, this.owner.powerupFlags);
+                } else if (this.gunType == 'gravGrenade') {
+                    bulletL = new GravGrenade(this, this.scene, this.owner.powerupFlags);
+                    bulletR = new GravGrenade(this, this.scene, this.owner.powerupFlags);
+                } else if (this.gunType == 'ricochet') {
+                    bulletL = new Ricochet(this, this.scene, this.owner.powerupFlags, this.bounceTimes, this.changedVelocity);
+                    bulletR = new Ricochet(this, this.scene, this.owner.powerupFlags, this.bounceTimes, this.changedVelocity);
+                }
+
                 let bulletIndexL = this.nextBulletIndex;
                 let bulletIndexR = this.nextBulletIndex;
+
                 //spawn Left Split
-                let bulletL = new Projectile(this, this.scene, this.owner.powerupFlags);
                 bulletL.isLeftSplit = true;
                 bulletL.init(this.scene.bullets.create(this.entity.x, this.entity.y, this.img));
                 bulletL.onFire();
-                this.projectiles[bulletIndexL] = bulletL;
+                //this.projectiles[bulletIndexL] = bulletL;
                 bulletL.entity.name = bulletIndexL;
-                //this.projectiles.push(bulletL);
+                this.projectiles.push(bulletL);
 
-                //spawn Right Split
-                let bulletR = new Projectile(this, this.scene, this.owner.powerupFlags);
+                //spawn Right Split                
                 bulletR.isRightSplit = true;
                 bulletR.init(this.scene.bullets.create(this.entity.x, this.entity.y, this.img));
                 bulletR.onFire();
-                this.projectiles[bulletIndexR] = bulletR;
+                //this.projectiles[bulletIndexR] = bulletR;
                 bulletR.entity.name = bulletIndexR;
-                //this.projectiles.push(bulletR);
+                this.projectiles.push(bulletR);
             }
         }
 

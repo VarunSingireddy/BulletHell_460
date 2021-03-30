@@ -9,6 +9,7 @@ class Enemy{
         
         this.isBurning = false;
         this.isSlow = false;
+        this.radius = 50;
         
     }
     
@@ -16,7 +17,8 @@ class Enemy{
     init(entity){
         this.entity = entity;
         this.entity.body.allowGravity = false;
-        
+        this.entity.body.allowDrag = true;
+        this.entity.body.drag = new Phaser.Math.Vector2(500,500);
     }
     
     
