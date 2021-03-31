@@ -34,7 +34,12 @@ class EnemyManager {
 
         this.scene.physics.add.overlap(this.scene.explosions, this.scene.enemies, (explosion, enemy) => {
             let en = this.enemies[enemy.name];
-            if(en && !en.delete) en.receiveDamage(100);
+            if (en && !en.delete) en.receiveDamage(100);
+            //console.log(en, enemy.name);
+        }, null, this.scene);
+
+        this.scene.physics.add.overlap(this.scene.bullets, this.player.entity, (bullet, player) => {
+            this.shootPlayer(bullet, player);
         }, null, this.scene);
 
     }
@@ -93,17 +98,24 @@ class EnemyManager {
     addEnemy() { //TODO: pass in the type of enemy to spawn and it's position
         let en = new Enemy(this.player, this.scene);
         //console.log("Enemy"); 
-        en.init(this.scene.enemies.create(Math.random() * 400, Math.random() * 300, 'delicousTeeth'));
+        let side = Math.floor(Math.random() * 4) + 1;
+        if (side == 5) side = 4;
+
+        let randX = (side % 2 != 0) ? Math.random() * 1280 : (side == 4) ? -100 : 1380;
+        let randY = (side % 2 == 0) ? Math.random() * 720 : (side == 1) ? -100 : 820;
+        en.init(this.scene.enemies.create(randX, randY, 'delicousTeeth'));
 
         let id = this.nextEnemyIndex;
 
         en.entity.name = id;
-        this.enemies.push(en);
+        this.enemies[id] = en;
+
+        //this.enemyNum++;
 
 
     }
 
-    update() {
+    update(dt) {
         //console.log(this.scene.bullets.children);
         /*
         this.enemies.forEach((e)=>{
@@ -120,13 +132,13 @@ class EnemyManager {
         for (let i = 0; i < this.enemies.length; ++i) {
 
             if (this.enemies[i]) {
-                this.enemies[i].update();
+                this.enemies[i].update(dt);
                 this.checkDistanceToGrav(this.enemies[i]);
                 if (this.enemies[i].delete) {
                     this.enemies[i].onDie();
                     this.enemies[i] = null;
-                    this.enemies.splice(i, 1);
-                    
+                    //this.enemies.splice(i,1);
+
                 }
             }
         }
@@ -139,7 +151,7 @@ class EnemyManager {
 
     checkDistanceToGrav(enemy) {
         enemy.isInGravPull = false;
-        enemy.calcVelocity();
+        //enemy.calcVelocity();
         if (this.player.gravGrenade.projectiles.length <= 0) return;
 
         for (let i = 0; i < this.player.gravGrenade.projectiles.length; i++) {
@@ -168,4 +180,42 @@ class EnemyManager {
         let angle = Math.atan2(dy, dx);
         return angle;
     }
+    shootPlayer(bullet, player) {
+        //console.log(bullet);
+        /*if(bullet.owner.owner != this.player)
+        {
+            console.log("Hit player");
+        }*/
+
+        //let en = this.enemies[enemy.name];
+        let bl;
+        //console.log(this.enemies[0].gun.projectiles[0]);
+        //console.log(this.scene.bullets.children);
+        //search through all bullets in game for this bullet
+        /*for (let i = 0; i < this.scene.bullets.length; ++i)
+        {
+            if (bullet == this.enemies[i].gun.projectiles[j].entity)
+            {
+                console.log("Found");
+                bl = this.player.gunArray[i].projectiles[j];
+                break;
+            }
+        }*/
+
+        //console.log(bl);
+
+        /*if (en && bl) {
+            //bl.delete = true;     SHOULD SET DELETE FROM PROJECTILE'S ONHIT() INSTEAD OF HERE
+            if(gunInd == 1)
+            {
+                bl.onHit(en);
+                en.isHooked = true;
+            }
+            else
+            {
+                bl.onHit();
+                en.reciveDamage(1);
+            }
+        }*/
+    } //shootPlayer
 }

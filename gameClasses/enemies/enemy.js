@@ -17,6 +17,9 @@ class Enemy {
         this.yDir = 0;
         this.speed = 50;
 
+        //allow enemies to shoot. Put in constructor
+        this.gun = new Gun(this, this.scene, 'default', 'normal');
+        this.timer = (Math.random() * 3) + 1; //shoots every 1-4 seconds
 
     }
 
@@ -29,7 +32,7 @@ class Enemy {
     }
 
 
-    update() {
+    update(dt) {
         //console.log('asd');
         if (this.health <= 0) {
             this.delete = true;
@@ -38,11 +41,18 @@ class Enemy {
 
         //have enemies slowly move towards player
         if (!this.isHooked && !this.isInGravPull) {
-            this.calcVelocity();            
+            this.calcVelocity();
 
             //we can put shooting or whatever else here
         } else {
             this.hooked(); //since this is the only action, they are essentially stunned
+        }
+        //we can put shooting or whatever else here. Put in enemy.js > update(t) ? if(!this.isHooked) after setting velocity
+        this.timer -= dt;
+        if (this.timer < 0) {
+            //shoot
+            this.gun.enemyFire(this.player);
+            this.timer = (Math.random() * 3) + 1;
         }
 
     }
@@ -88,7 +98,7 @@ class Enemy {
         //if distance is close enough, can stop dragging enemy
         if (hyp < 100) {
             this.isHooked = false;
-            this.reciveDamage(1);
+            this.receiveDamage(1);
         }
 
         let speed = 1000;

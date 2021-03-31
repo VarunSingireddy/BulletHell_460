@@ -20,7 +20,7 @@ class Gun {
         this.shootDownPrev = false; //not used in the
         this.projectiles = [];
         this.img = img;
-        this.gunType = gunType;        
+        this.gunType = gunType;
     }
 
     init(entity) {
@@ -36,7 +36,7 @@ class Gun {
         //console.log(this.scene.angleToMouse(this.entity));
         this.entity.angle = this.scene.angleToMouseDeg(this.entity) + 90;
 
-        this.updateProjectiles(dt);            
+        this.updateProjectiles(dt);
 
 
         this.shootDownPrev = this.shootDown;
@@ -51,7 +51,7 @@ class Gun {
             if (this.gunType == 'normal') {
                 bullet = new Projectile(this, this.scene, this.owner.powerupFlags);
             } else if (this.gunType == 'hook') {
-                if(this.projectiles.length > 0) return;
+                if (this.projectiles.length > 0) return;
                 bullet = new Hook(this, this.scene, this.owner.powerupFlags);
             } else if (this.gunType == 'gravGrenade') {
                 bullet = new GravGrenade(this, this.scene, this.owner.powerupFlags);
@@ -61,10 +61,10 @@ class Gun {
                 bullet = new Missile(this, this.scene, this.owner.powerupFlags);
             } else if (this.gunType == 'flame') {
                 bullet = new Flame(this, this.scene, this.owner.powerupFlags);
-            } 
+            }
             //console.log(this.owner);
             bullet.init(this.scene.bullets.create(this.entity.x, this.entity.y, this.img)); //'default'));
-            bullet.onFire();            
+            bullet.onFire();
 
             //console.log(bulletIndex);
             //this.projectiles[bulletIndex] = bullet;
@@ -130,4 +130,24 @@ class Gun {
             }
         }
     } //updateProjectiles()
+    enemyFire(p) //enemy using gun. Put in gun.js
+    {
+        let bulletIndex = this.nextBulletIndex;
+        let bullet = new Projectile(this, this.scene, this.owner.powerupFlags);
+
+        bullet.init(this.scene.bullets.create(this.owner.entity.x, this.owner.entity.y, this.img));
+
+        //send bullet towards player
+        //console.log(this.owner);
+        let xTarget = this.owner.entity.body.x - p.entity.body.x;
+        let yTarget = this.owner.entity.body.y - p.entity.body.y;
+        let hyp = Math.sqrt(Math.pow(xTarget, 2) + Math.pow(yTarget, 2));
+        xTarget /= -hyp;
+        yTarget /= -hyp;
+
+        bullet.entity.body.setVelocity(xTarget * bullet.speed, yTarget * bullet.speed);
+
+        this.projectiles.push(bullet);
+        bullet.entity.name = bulletIndex;
+    }
 }

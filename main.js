@@ -197,7 +197,7 @@ const config = {
                 }
             }
 
-            this.enemyManager.update();
+            this.enemyManager.update(delta/1000);
             this.powerupManager.update();
 
             for(let i = 0; i < this.explosionArray.length; i++) {
