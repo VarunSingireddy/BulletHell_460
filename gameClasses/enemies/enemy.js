@@ -16,7 +16,9 @@ class Enemy {
         this.yDir = 0;
         this.speed = 50;
 
-
+        //allow enemies to shoot
+        this.gun = new Gun(this, this.scene, 'default', 'normal');
+        this.timer = (Math.random() * 3) + 1;//shoots every 1-4 seconds
     }
 
 
@@ -28,7 +30,7 @@ class Enemy {
     }
 
 
-    update() {
+    update(t) {
         //console.log('asd');
         if (this.health <= 0) {
             this.delete = true;
@@ -46,6 +48,13 @@ class Enemy {
             this.entity.body.setVelocity(this.xDir * this.speed, this.yDir * this.speed);
 
             //we can put shooting or whatever else here
+            this.timer -= t;
+            if(this.timer < 0)
+            {
+                //shoot
+                this.gun.enemyFire(this.player);
+                this.timer = (Math.random() * 3) + 1;
+            }
         } else {
             this.hooked(); //since this is the only action, they are essentially stunned
         }
@@ -62,7 +71,7 @@ class Enemy {
     }
     toPlayer() {
         let p = this.player;
-        console.log(this.entity.body);
+        //console.log(this.entity.body);
         let xTarget = this.entity.x - p.entity.body.x;
         let yTarget = this.entity.y - p.entity.body.y;
         let hyp = Math.sqrt(Math.pow(xTarget, 2) + Math.pow(yTarget, 2));

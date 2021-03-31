@@ -33,6 +33,11 @@ class EnemyManager {
         this.scene.physics.add.overlap(this.scene.bullets, this.scene.enemies, (bullet, enemy) => {
             this.hitBullet(bullet, enemy);
         }, null, this.scene);
+        
+        //testing enemies shooting player
+        this.scene.physics.add.overlap(this.scene.bullets, this.player.entity, (bullet, player) => {
+            this.shootPlayer(bullet, player);
+        }, null, this.scene);
 
     }
 
@@ -100,7 +105,48 @@ class EnemyManager {
 
     }
 
-    update() {
+
+    shootPlayer(bullet, player)
+    {
+        //console.log(bullet);
+        /*if(bullet.owner.owner != this.player)
+        {
+            console.log("Hit player");
+        }*/
+
+        //let en = this.enemies[enemy.name];
+        let bl;
+        //console.log(this.enemies[0].gun.projectiles[0]);
+        //console.log(this.scene.bullets.children);
+        //search through all bullets in game for this bullet
+        /*for (let i = 0; i < this.scene.bullets.length; ++i)
+        {
+            if (bullet == this.enemies[i].gun.projectiles[j].entity)
+            {
+                console.log("Found");
+                bl = this.player.gunArray[i].projectiles[j];
+                break;
+            }
+        }*/
+        
+        //console.log(bl);
+
+        /*if (en && bl) {
+            //bl.delete = true;     SHOULD SET DELETE FROM PROJECTILE'S ONHIT() INSTEAD OF HERE
+            if(gunInd == 1)
+            {
+                bl.onHit(en);
+                en.isHooked = true;
+            }
+            else
+            {
+                bl.onHit();
+                en.reciveDamage(1);
+            }
+        }*/
+    }//shootPlayer
+
+    update(t) {
 
         /*
         this.enemies.forEach((e)=>{
@@ -118,7 +164,7 @@ class EnemyManager {
 
             if (this.enemies[i]) {
                 this.checkDistanceToGrav(this.enemies[i]);
-                this.enemies[i].update();
+                this.enemies[i].update(t);
                 if (this.enemies[i].delete) {
                     this.enemies[i].onDie();
                     this.enemies[i] = null;

@@ -240,7 +240,7 @@ const config = {
                 }
             }*/
             //this.updatePowerups();     
-            this.enemyManager.update();
+            this.enemyManager.update(delta/1000);
             this.powerupManager.update();
             
             //this.player
