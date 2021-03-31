@@ -42,6 +42,7 @@ class Powerup {
             if (this.powerupType == 3) {
                 this.scene.player.powerupFlags.slowPocket = true;
                 this.scene.player.slowPocketsTimer = 5;
+<<<<<<< refs/remotes/origin/Jacob3
             }      
             if (this.powerupType == 4) {
                 this.scene.player.powerupFlags.pierceShot = true;
@@ -49,6 +50,14 @@ class Powerup {
             }   
         }       
         
+=======
+            }
+            if(this.powerupType == 4) {
+                this.scene.player.powerupFlags.pierceShot = true;
+                this.scene.player.pierceTimer = 5;
+            }
+        }        
+>>>>>>> Missile Update before Rebase
         this.delete = true;
     }
 
