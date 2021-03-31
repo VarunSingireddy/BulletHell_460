@@ -36,7 +36,7 @@ class Powerup {
             }
             if (this.powerupType == 2) {
                 this.scene.player.powerupFlags.portal = true;
-                this.scene.player.portalTimer = 5;
+                this.scene.player.portalTimer = 10;
             }
             if (this.powerupType == 3) {
                 this.scene.player.powerupFlags.slowPocket = true;

@@ -13,12 +13,12 @@ class Player {
         this.gunIndex = 0;
 
         this.multiShotTimer = 5;
-        this.portalTimer = 5;
+        this.portalTimer = 10;
         this.slowPocketsTimer = 5;
         this.pierceShotTimer = 5;
 
         this.powerupFlags = {
-            portal: false,
+            portal: true,
             multiShot: false,
             slowPocket: false,
             pierceShot: false,

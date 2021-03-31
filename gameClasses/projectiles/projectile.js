@@ -19,11 +19,29 @@ class Projectile {
         this.setVelocityTowardMouse();
     } //init()
 
-    update() { //this is called in the gun update
-        if (this.entity.x < 0 || this.entity.x > this.scene.width || this.entity.y < 0 || this.entity.y > this.scene.height) {
-            this.delete = true;
+        update() { //this is called in the gun update
+        if (this.entity.x < 0 || this.entity.x > 1280 || this.entity.y < 0 || this.entity.y > 720) {
+            if (this.scene.player.powerupFlags.portal) {
+                if (this.entity.x <= 0) {
+                    this.entity.x = 1270;
+                }
+                else if (this.entity.x >= 1280) {
+                    this.entity.x = 10;
+
+                }
+                else if (this.entity.y >= 720) {
+                    this.entity.y = 10;
+                  
+                }
+                else if (this.entity.y <= 0) {
+                    this.entity.y = 710;
+                }
+                else this.delete = true;
+                
+            }
         }
-    } //update()
+        
+    }  //update()
 
     onFire() {
 
