@@ -12,6 +12,7 @@ class Player {
         this.flameThrower = new Gun(this, scene, 'flame', 'flame');
         this.gunArray = [this.gun, this.hook, this.ricochet, this.launcher, this.flameThrower];
         this.gunIndex = 0;
+        this.health = 100;
 
         this.multiShotTimer = 5;
         this.portalTimer = 10;
@@ -81,6 +82,7 @@ class Player {
 
         //console.log(this.gun.projectiles.length);
         //console.log(this.powerupFlags);
+        //console.log(this.health);
 
 
         this.dir.set(0, 0);

@@ -11,6 +11,17 @@ class EnemyManager {
         return ++EnemyManager._enemyIdCount;
     }
 
+    static _coinIdCount = -1;
+
+    get nextCoinIndex() {
+        if (EnemyManager._coinIdCount >= 300) { //if we hit 300 wrap the value
+            //console.log("reseting PacketID");
+            EnemyManager._coinIdCount = 0;
+        }
+        //console.log("ID :" + AppHelper._idCount);
+        return ++EnemyManager._coinIdCount;
+    }
+
 
 
     constructor(player, scene) {
@@ -36,7 +47,7 @@ class EnemyManager {
 
         this.scene.physics.add.overlap(this.scene.explosions, this.scene.enemies, (explosion, enemy) => {
             let en = this.enemies[enemy.name];
-            if(en && !en.delete) en.receiveDamage(100);
+            if (en && !en.delete) en.receiveDamage(100);
             //console.log(en, enemy.name);
         }, null, this.scene);
 
@@ -51,6 +62,9 @@ class EnemyManager {
         // enemy.onDie();
         //console.log(enemy.entity);
 
+        let en = this.enemies[enemyEntity.name];
+        en.delete = true;
+        playerEntity.health -= 10;
     }
 
     hitBullet(bullet, enemy) {
@@ -92,7 +106,12 @@ class EnemyManager {
     addEnemy() { //TODO: pass in the type of enemy to spawn and it's position
         let en = new Enemy(this.player, this.scene);
         //console.log("Enemy"); 
-        en.init(this.scene.enemies.create(Math.random() * 400, Math.random() * 300, 'delicousTeeth'));
+        let side = Math.floor(Math.random() * 4) + 1;
+        if (side == 5) side = 4;
+
+        let randX = (side % 2 != 0) ? Math.random() * 1280 : (side == 4) ? -100 : 1380;
+        let randY = (side % 2 == 0) ? Math.random() * 720 : (side == 1) ? -100 : 820;
+        en.init(this.scene.enemies.create(randX, randY, 'delicousTeeth'));
 
         let id = this.nextEnemyIndex;
 
@@ -100,8 +119,6 @@ class EnemyManager {
         this.enemies[id] = en;
 
         //this.enemyNum++;
-
-
     }
 
     update() {
@@ -139,7 +156,7 @@ class EnemyManager {
 
     checkDistanceToGrav(enemy) {
         enemy.isInGravPull = false;
-        enemy.calcVelocity();
+        //enemy.calcVelocity();
         if (this.player.gravGrenade.projectiles.length <= 0) return;
 
         for (let i = 0; i < this.player.gravGrenade.projectiles.length; i++) {

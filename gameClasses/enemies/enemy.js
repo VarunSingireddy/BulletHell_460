@@ -78,6 +78,7 @@ class Enemy {
 
     hooked() //enemy has been hooked
     {
+        console.log("hooked");
         let p = this.player;
         let xTarget = this.entity.x - p.entity.body.x;
         let yTarget = this.entity.y - p.entity.body.y;

@@ -33,7 +33,7 @@ const config = {
 
             this.powerupArray = [];
             this.explosionArray = [];
-            
+
             var player = this.player;
 
 
@@ -193,6 +193,16 @@ const config = {
 
             //enemyManager.addEnemy();
 
+            this.enemyCooldown = 1;
+            this.enemySpawner = function (dt) {
+                //console.log(this.enemyCooldown);
+                this.enemyCooldown -= dt;
+                if (this.enemyCooldown <= 0) {
+                    this.enemyManager.addEnemy();
+                    this.enemyCooldown = Math.random() * 1.5 + .5;
+                }
+            }
+
             this.bloodEmitter = this.add.particles('blood').createEmitter({
                 x: -100,
                 y: -100,
@@ -204,7 +214,10 @@ const config = {
                     min: 0,
                     max: 90
                 },
-                quantity: {min: 2, max: 5},
+                quantity: {
+                    min: 2,
+                    max: 5
+                },
                 scale: {
                     start: 0.5,
                     end: 0
@@ -217,7 +230,7 @@ const config = {
 
 
             this.bloodEmitter.explode();
-            
+
 
 
 
@@ -239,16 +252,16 @@ const config = {
                 }
             }*/
             //this.updatePowerups(); 
-            
-            for(let i = 0; i < this.explosionArray.length; i++) {
+
+            for (let i = 0; i < this.explosionArray.length; i++) {
                 this.explosionArray[i].update();
-                if(this.explosionArray[i].delete) {
+                if (this.explosionArray[i].delete) {
                     this.explosionArray[i].entity.destroy();
                     this.explosionArray.splice(i, 1);
-                    
+
                 }
             }
-
+            this.enemySpawner(delta / 1000);
             this.enemyManager.update();
             this.powerupManager.update();
 

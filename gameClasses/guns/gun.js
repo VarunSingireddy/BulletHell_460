@@ -91,6 +91,12 @@ class Gun {
                 } else if (this.gunType == 'ricochet') {
                     bulletL = new Ricochet(this, this.scene, this.owner.powerupFlags, this.bounceTimes, this.changedVelocity);
                     bulletR = new Ricochet(this, this.scene, this.owner.powerupFlags, this.bounceTimes, this.changedVelocity);
+                } else if (this.gunType == 'missile') {
+                    bulletL = new Missile(this, this.scene, this.owner.powerupFlags);
+                    bulletR = new Missile(this, this.scene, this.owner.powerupFlags);
+                } else if (this.gunType == 'flame') {
+                    bulletL = new Flame(this, this.scene, this.owner.powerupFlags);
+                    bulletR = new Flame(this, this.scene, this.owner.powerupFlags);
                 }
 
                 let bulletIndexL = this.nextBulletIndex;
