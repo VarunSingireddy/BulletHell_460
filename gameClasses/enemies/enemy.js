@@ -4,12 +4,17 @@ class Enemy{
         this.scene = scene;
         this.player = player;
         
-        this.health = 1;
+        this.health = 10;
         this.delete = false;
         
         this.isBurning = false;
         this.isSlow = false;
         
+        this.isHooked = false;
+        //unit vectors for movement direction
+        this.xDir = 0;
+        this.yDir = 0;
+        this.speed = 50;
     }
     
     
@@ -24,9 +29,25 @@ class Enemy{
         //console.log('asd');
         if(this.health<=0){
             this.delete = true;
-            
         }
         
+        //have enemies slowly move towards player
+        if(!this.isHooked)
+        {
+            //calculate unit vectors and move enemy
+            this.xDir = this.entity.x - this.player.entity.body.x;
+            this.yDir = this.entity.y - this.player.entity.body.y;
+            let hyp = Math.sqrt(Math.pow(this.xDir, 2) + Math.pow(this.yDir, 2));
+            this.xDir /= -hyp;
+            this.yDir /= -hyp;
+            this.entity.body.setVelocity(this.xDir * this.speed, this.yDir * this.speed);
+            
+            //we can put shooting or whatever else here
+        }
+        else
+        {
+            this.hooked();//since this is the only action, they are essentially stunned
+        }
     }
     
     reciveDamage(damage){
@@ -36,6 +57,37 @@ class Enemy{
     onDie(){
         this.entity.destroy();
        //this.entity.active = false;
+    }
+    
+    toPlayer()
+    {
+        let p = this.player;
+        console.log(this.entity.body);
+        let xTarget = this.entity.x - p.entity.body.x;
+        let yTarget = this.entity.y - p.entity.body.y;
+        let hyp = Math.sqrt(Math.pow(xTarget, 2) + Math.pow(yTarget, 2));
+        xTarget /= -hyp;
+        yTarget /= -hyp;
+    }
+    
+    hooked()//enemy has been hooked
+    {
+        let p = this.player;
+        let xTarget = this.entity.x - p.entity.body.x;
+        let yTarget = this.entity.y - p.entity.body.y;
+        let hyp = Math.sqrt(Math.pow(xTarget, 2) + Math.pow(yTarget, 2));
+        xTarget /= -hyp;
+        yTarget /= -hyp;
+        
+        //if distance is close enough, can stop dragging enemy
+        if(hyp < 100)
+        {
+            this.isHooked = false;
+            this.reciveDamage(1);
+        }
+        
+        let speed = 1000;
+        this.entity.body.setVelocity(xTarget * speed, yTarget * speed);
     }
     
     

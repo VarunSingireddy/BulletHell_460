@@ -55,7 +55,7 @@ class EnemyManager {
         let bl;// = this.player.gun.projectiles[bullet.name];
         
         //search through the guns array and their respective projectiles array to find THIS bullet
-        let found = false;
+        let gunInd = -1;//track the gun used. good for calling enemy stuff
         for(let i = 0; i < this.player.gunArray.length; ++i)
         {
             for(let j = 0; j < this.player.gunArray[i].projectiles.length; ++j)//O(n^2) time. Gross
@@ -63,17 +63,25 @@ class EnemyManager {
                 if(bullet == this.player.gunArray[i].projectiles[j].entity)
                 {
                     bl = this.player.gunArray[i].projectiles[j];
-                    found = true;
+                    gunInd = i;
                     break;
                 }
             }
-            if(found) break;
+            if(gunInd != -1) break;
         }
         
         if (en && bl) {
-            en.reciveDamage(10);
             //bl.delete = true;     SHOULD SET DELETE FROM PROJECTILE'S ONHIT() INSTEAD OF HERE
-            bl.onHit();
+            if(gunInd == 1)
+            {
+                bl.onHit(en);
+                en.isHooked = true;
+            }
+            else
+            {
+                bl.onHit();
+                en.reciveDamage(1);
+            }
         }
         //asconsole.log("suck");
 

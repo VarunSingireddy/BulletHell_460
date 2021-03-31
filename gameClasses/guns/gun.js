@@ -53,6 +53,7 @@ class Gun {
             if (this.gunType == 'normal') {
                 bullet = new Projectile(this, this.scene, this.owner.powerupFlags);
             } else if (this.gunType == 'hook') {
+                if(this.projectiles.length > 0) return;
                 bullet = new Hook(this, this.scene, this.owner.powerupFlags);
             } else if (this.gunType == 'gravGrenade') {
                 bullet = new GravGrenade(this, this.scene, this.owner.powerupFlags);
