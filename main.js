@@ -15,6 +15,10 @@ const config = {
         preload: function () { //constructor equivilent//loads assets'
             this.load.image('default', 'data/default.png');
             this.load.image('bullet', 'data/bullet.png');
+            
+            this.load.image('delicousTeeth','data/FrogBoss.png');
+            
+            this.load.image('blood', 'data/Blood.png');
 
 
             
@@ -58,6 +62,26 @@ const config = {
             this.input.on('pointerup', (e)=>{player.fire(false);});
             
 
+            
+
+            //switch guns
+            this.input.keyboard.on('keydown-' + 'R', (e) => {
+                player.switchGun(1);
+            });
+            this.input.keyboard.on('keydown-' + 'E', (e) => {
+                player.switchGun(-1);
+            });
+
+            this.input.keyboard.on('keydown-' + 'T', (e) => {
+                this.spawnPowerup('bullet');
+            });
+            this.input.keyboard.on('keydown-' + 'G', (e) => {
+                player.spawnGravityGrenade(true);
+            });
+            this.input.keyboard.on('keyup-' + 'G', (e) => {
+                player.spawnGravityGrenade(false);
+            });
+
             //this.input.keyboard.cursorKeys.on('keydown',function (event) { console.log("down");});
             
             
@@ -89,6 +113,33 @@ const config = {
             }
 
             //console.log(this.angleToMouse(player.entity));
+            
+            this.enemyManager = new EnemyManager(player,this);
+            this.enemyManager.init();
+            this.enemyManager.addEnemy();
+            this.enemyManager.addEnemy();
+            this.enemyManager.addEnemy();
+            this.enemyManager.addEnemy();
+            this.enemyManager.addEnemy();
+            
+            //enemyManager.addEnemy();
+            
+            
+            var bloodEmitter = this.add.particles('blood').createEmitter({
+                x:400,
+                y:400,
+                speed: {min: -800, max: 800 }, 
+                angle: {min: 0, max: 90 },
+                scale: {start:0.5 , end: 0 }, 
+                blendMode: 'SCREEN',
+                //active: false,
+                lifespan:200,
+                gravityY:0
+            });
+            
+            
+            bloodEmitter.explode();
+            bloodEmitter.explode();
 
         },
         update: function (time, delta) {

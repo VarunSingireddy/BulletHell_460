@@ -4,12 +4,24 @@ class Player {
         this.speed = new Phaser.Math.Vector2(450.0, 450.0); //300;
         this.velocity = new Phaser.Math.Vector2(0, 0);
         this.dir = new Phaser.Math.Vector2(0, 0);
-        this.gun = new Gun(this,scene);
-        
+        this.gun = new Gun(this, scene, 'default', 'normal');
+        this.hook = new Gun(this, scene, 'bullet', 'hook');
+        this.gravGrenade = new Gun(this, scene, 'default', 'gravGrenade');
+        this.ricochet = new Gun(this, scene, 'bullet', 'ricochet');
+        this.launcher = new Launcher(this, scene, 'missile');
+        this.gunArray = [this.gun, this.hook, this.ricochet, this.launcher];
+        this.gunIndex = 0;
+
+        this.multiShotTimer = 5;
+        this.portalTimer = 5;
+        this.slowPocketsTimer = 5;
+        this.pierceShotTimer = 5;
+
         this.powerupFlags = {
             portal: false,
-            multiShot:false,
-            slowPocket:false
+            multiShot: false,
+            slowPocket: false,
+            pierceShot: false
         }
         
         this.dirFlags = {
@@ -52,6 +64,15 @@ class Player {
         }
         
         this.gun.update();
+
+        this.gun.update(dt);
+        this.hook.update(dt);
+        this.ricochet.update(dt);
+        this.gravGrenade.update(dt);
+        this.updatePowerupFlags(dt);
+
+        //console.log(this.gun.projectiles.length);
+        console.log(this.powerupFlags);
 
         this.dir.set(0, 0);
     }
@@ -103,5 +124,40 @@ class Player {
             this.dir.normalize();
         }
         
+
+        this.dir.normalize();
+    } //handleDirection()
+
+    updatePowerupFlags(dt) {
+        if (this.powerupFlags.multiShot) {
+            //console.log(this.multiShotTimer);
+            this.multiShotTimer -= dt;
+            if (this.multiShotTimer <= 0) this.powerupFlags.multiShot = false;
+        }
+        
+        if (this.powerupFlags.portal) {
+            //console.log(this.multiShotTimer);
+            this.portalTimer -= dt;
+            if (this.portalTimer <= 0) this.powerupFlags.portal = false;
+        }
+        
+        if (this.powerupFlags.slowPocket) {
+            //console.log(this.multiShotTimer);
+            this.slowPocketsTimer -= dt;
+            if (this.slowPocketsTimer <= 0) this.powerupFlags.slowPocket = false;
+        }
+        
+        if (this.powerupFlags.pierceShot) {
+            //console.log(this.multiShotTimer);
+            this.pierceShotTimer -= dt;
+            if (this.pierceShotTimer <= 0) this.powerupFlags.pierceShot = false;
+        }
+        
+    }
+
+    spawnGravityGrenade(bool) {
+        this.gravGrenade.fire(bool)
+    }
+
 
 }

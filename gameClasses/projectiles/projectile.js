@@ -18,23 +18,31 @@ class Projectile{
     init(entity){
         this.entity = entity;
         this.entity.body.allowGravity = false;
+
+        this.setVelocityTowardMouse();
+    } //init()
+
+    update() { //this is called in the gun update
+        if (this.entity.x < 0 || this.entity.x > this.scene.width || this.entity.y < 0 || this.entity.y > this.scene.height) {
+            this.delete = true;
+        }
+    } //update()
+
+    onFire() {
+
+    } //onFire()
+
+    onHit() {
         
-        this.setVelocityTwoardMouse();  
-    }
-    
-    update(){//this is called in the gun update
+        if(!this.scene.player.powerupFlags.pierceShot){
+            this.delete = true;
+        }
         
-    }
-    
-    onFire(){
-        
-    }
-    
-    onHit(){
-        
-    }
-    
-    onDie(){
+        //this.scene.player.bloodEmitter.();
+
+    } //onHit()
+
+    onDie() {
         //this.entity = null;
         this.owner = null;
         this.scene = null;
