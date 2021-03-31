@@ -1,7 +1,8 @@
 class Powerup {
 
-    constructor(scene) {
+    constructor(player, scene) {
         this.scene = scene;
+        this.player = player;
         this.entity;
         this.delete = false;
         this.powerupType = 1;
@@ -16,13 +17,14 @@ class Powerup {
     init(entity) {
         this.entity = entity;
         this.entity.body.allowGravity = false;
-        this.powerupType = Phaser.Math.Between(1, 3);
+        this.powerupType = Phaser.Math.Between(1, 4);
 
     } //init()
 
     update() {
         
-        this.setPlayerPowerup();
+        //this.setPlayerPowerup();
+        //console.log(this.powerupType);
     }
 
     //run this when the player collides with the power up object
@@ -39,8 +41,13 @@ class Powerup {
             if (this.powerupType == 3) {
                 this.scene.player.powerupFlags.slowPocket = true;
                 this.scene.player.slowPocketsTimer = 5;
-            }            
-        }        
+            }      
+            if (this.powerupType == 4) {
+                this.scene.player.powerupFlags.pierceShot = true;
+                this.scene.player.pierceShotTimer = 5;
+            }   
+        }       
+        
         this.delete = true;
     }
 

@@ -52,16 +52,30 @@ class EnemyManager {
         //console.log("index: " + enemy.name);
 
         let en = this.enemies[enemy.name];
-        //console.log(en);
-        let bl = this.player.gun.projectiles[bullet.name];
+        let bl; // = this.player.gun.projectiles[bullet.name];
+
+        //search through the guns array and their respective projectiles array to find THIS bullet
+        let found = false;
+        for (let i = 0; i < this.player.gunArray.length; ++i) {
+            for (let j = 0; j < this.player.gunArray[i].projectiles.length; ++j) //O(n^2) time. Gross
+            {
+                if (bullet == this.player.gunArray[i].projectiles[j].entity) {
+                    bl = this.player.gunArray[i].projectiles[j];
+                    found = true;
+                    break;
+                }
+            }
+            if (found) break;
+        }
 
         if (en && bl) {
             en.reciveDamage(10);
-            bl.delete = true;
+            //bl.delete = true;     SHOULD SET DELETE FROM PROJECTILE'S ONHIT() INSTEAD OF HERE
+            bl.onHit();
         }
         //asconsole.log("suck");
 
-    }
+    } //hitBullet()
 
     addEnemy() { //TODO: pass in the type of enemy to spawn and it's position
         let en = new Enemy(this.player, this.scene);
@@ -110,18 +124,18 @@ class EnemyManager {
     checkDistanceToGrav(enemy) {
         if (this.player.gravGrenade.projectiles.length <= 0) return;
 
-        for (i = 0; i < this.player.gravGrenade.projectiles.length; i++) {
+        for (let i = 0; i < this.player.gravGrenade.projectiles.length; i++) {
 
             this.dist = this.calcDistance(enemy.entity.x, enemy.entity.y, this.player.gravGrenade.projectiles[i].entity.x, this.player.gravGrenade.projectiles[i].entity.y);
-            
-            if (this.dist < enemy.radius + this.player.gravGrenade.projectiles[i].radius && this.player.gravGrenade.projectiles[i].enableGravPull) {                
+
+            if (this.dist < enemy.radius + this.player.gravGrenade.projectiles[i].radius && this.player.gravGrenade.projectiles[i].enableGravPull) {
                 //this.scene.accelerateToObject(enemy.entity, this.player.gravGrenade.projectiles[i].entity, 100,500,500);
                 let angle = this.calcAngle(enemy.entity.x, enemy.entity.y, this.player.gravGrenade.projectiles[i].entity.x, this.player.gravGrenade.projectiles[i].entity.y)
                 enemy.xVelocity = Math.cos(angle) * 100;
                 enemy.yVelocity = Math.sin(angle) * 100;
 
-                enemy.entity.body.setVelocity(enemy.xVelocity, enemy.yVelocity);                
-            } 
+                enemy.entity.body.setVelocity(enemy.xVelocity, enemy.yVelocity);
+            }
         }
     }
 

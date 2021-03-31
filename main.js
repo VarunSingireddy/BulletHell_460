@@ -17,6 +17,10 @@ const config = {
         preload: function () { //constructor equivilent//loads assets'
             this.load.image('default', 'data/default.png');
             this.load.image('bullet', 'data/bullet.png');
+            this.load.image('player', 'data/Player.png');
+            this.load.image('blood', 'data/Blood.png');
+            this.load.image('missile', 'data/missile.png');
+
             
             this.load.image('delicousTeeth','data/FrogBoss.png');
 
@@ -161,7 +165,7 @@ const config = {
                 return angle *= Phaser.Math.RAD_TO_DEG;
             }
 
-            this.spawnPowerup = function (img) {
+            /*this.spawnPowerup = function (img) {
                 let powerup = new Powerup(this);
 
                 let spawnX = 100;
@@ -170,7 +174,7 @@ const config = {
                 powerup.init(this.powerups.create(spawnX, spawnY, img));
                 //powerup.gravity = 0;
                 this.powerupArray.push(powerup);
-            }
+            }*/
 
             /*this.updatePowerups = function () {
                 
@@ -195,16 +199,37 @@ const config = {
             this.enemyManager.addEnemy();
             this.enemyManager.addEnemy();
             
+            
+            this.powerupManager = new PowerupManager(player,this);
+            this.powerupManager.init();
+            this.powerupManager.addPowerup();
+            
             //enemyManager.addEnemy();
+            
+            var bloodEmitter = this.add.particles('blood').createEmitter({
+                x:400,
+                y:400,
+                speed: {min: -800, max: 800 }, 
+                angle: {min: 0, max: 90 },
+                scale: {start:0.5 , end: 0 }, 
+                blendMode: 'SCREEN',
+                //active: false,
+                lifespan:200,
+                gravityY:0
+            });
+            
+            
+            bloodEmitter.explode();
+            bloodEmitter.explode();
 
         },
 
         update: function (time, delta) {
             
             this.player.update(delta / 1000);
-            this.physics.add.overlap(this.player.entity, this.powerups, powerupCollisionHandler, null, this);
+            //this.physics.add.overlap(this.player.entity, this.powerups, powerupCollisionHandler, null, this);
 
-            for (i = 0; i < this.powerupArray.length; i++) {
+            /*for (i = 0; i < this.powerupArray.length; i++) {
                 this.powerupArray[i].update();
                 if (this.powerupArray[i].delete) {
                     {
@@ -213,32 +238,26 @@ const config = {
                         --i;
                     }
                 }
-            }
+            }*/
             //this.updatePowerups();     
             this.enemyManager.update();
+            this.powerupManager.update();
             
             //this.player
             //console.log(this.player.gun.projectiles.length);
             
             
         },
-
-
-
-
-
-
-
     } //scene
 };
 
-function powerupCollisionHandler(player, powerup) {
+/*function powerupCollisionHandler(player, powerup) {
     console.log(powerup)
     this.powerups.indexOf(powerup);
 
     //powerup.setPlayerPowerup();
 
-}
+}*/
 
 
 

@@ -15,11 +15,13 @@ class Player {
         this.multiShotTimer = 5;
         this.portalTimer = 5;
         this.slowPocketsTimer = 5;
+        this.pierceShotTimer = 5;
 
         this.powerupFlags = {
             portal: false,
             multiShot: false,
-            slowPocket: false
+            slowPocket: false,
+            pierceShot: false,
         }
 
         this.dirFlags = {
@@ -73,6 +75,7 @@ class Player {
         this.updatePowerupFlags(dt);
 
         //console.log(this.gun.projectiles.length);
+        //console.log(this.powerupFlags);
 
 
         this.dir.set(0, 0);
@@ -140,6 +143,23 @@ class Player {
             //console.log(this.multiShotTimer);
             this.multiShotTimer -= dt;
             if (this.multiShotTimer <= 0) this.powerupFlags.multiShot = false;
+        }
+        if (this.powerupFlags.portal) {
+            //console.log(this.multiShotTimer);
+            this.portalTimer -= dt;
+            if (this.portalTimer <= 0) this.powerupFlags.portal = false;
+        }
+
+        if (this.powerupFlags.slowPocket) {
+            //console.log(this.multiShotTimer);
+            this.slowPocketsTimer -= dt;
+            if (this.slowPocketsTimer <= 0) this.powerupFlags.slowPocket = false;
+        }
+
+        if (this.powerupFlags.pierceShot) {
+            //console.log(this.multiShotTimer);
+            this.pierceShotTimer -= dt;
+            if (this.pierceShotTimer <= 0) this.powerupFlags.pierceShot = false;
         }
     }
 

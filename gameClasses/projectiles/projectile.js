@@ -30,6 +30,9 @@ class Projectile {
     } //onFire()
 
     onHit() {
+        if(!this.scene.player.powerupFlags.pierceShot) {
+            this.delete = true;
+        }
 
     } //onHit()
 
