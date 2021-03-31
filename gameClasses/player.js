@@ -16,21 +16,14 @@ class Player {
         this.multiShotTimer = 5;
         this.portalTimer = 10;
         this.slowPocketsTimer = 5;
-<<<<<<< refs/remotes/origin/Jacob3
+
         this.pierceShotTimer = 5;
-=======
-        this.pierceTimer = 5;
->>>>>>> Missile Update before Rebase
 
         this.powerupFlags = {
             portal: false,
             multiShot: false,
             slowPocket: false,
-<<<<<<< refs/remotes/origin/Jacob3
             pierceShot: false,
-=======
-            pierceShot: false
->>>>>>> Missile Update before Rebase
         }
 
         this.dirFlags = {
@@ -153,42 +146,26 @@ class Player {
 
     updatePowerupFlags(dt) {
         if (this.powerupFlags.multiShot) {
-<<<<<<< refs/remotes/origin/Jacob3
-            //console.log(this.multiShotTimer);
-=======
->>>>>>> Missile Update before Rebase
             this.multiShotTimer -= dt;
             if (this.multiShotTimer <= 0) this.powerupFlags.multiShot = false;
         }
         if (this.powerupFlags.portal) {
-<<<<<<< refs/remotes/origin/Jacob3
-            //console.log(this.multiShotTimer);
             this.portalTimer -= dt;
             if (this.portalTimer <= 0) this.powerupFlags.portal = false;
         }
 
         if (this.powerupFlags.slowPocket) {
-            //console.log(this.multiShotTimer);
             this.slowPocketsTimer -= dt;
             if (this.slowPocketsTimer <= 0) this.powerupFlags.slowPocket = false;
         }
 
         if (this.powerupFlags.pierceShot) {
-            //console.log(this.multiShotTimer);
             this.pierceShotTimer -= dt;
             if (this.pierceShotTimer <= 0) this.powerupFlags.pierceShot = false;
-=======
-            this.portalTimer -= dt;
-            if (this.portalTimer <= 0) this.powerupFlags.portal = false;
         }
         if (this.powerupFlags.slowPocket) {
             this.slowPocketsTimer -= dt;
             if (this.slowPocketsTimer <= 0) this.powerupFlags.slowPocket = false;
-        }
-        if (this.powerupFlags.pierceShot) {
-            this.pierceTimer -= dt;
-            if(this.pierceTimer <= 0) this.powerupFlags.pierceShot = false;
->>>>>>> Missile Update before Rebase
         }
     }
 

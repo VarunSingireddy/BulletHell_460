@@ -31,20 +31,12 @@ class EnemyManager {
         this.scene.physics.add.overlap(this.scene.bullets, this.scene.enemies, (bullet, enemy) => {
             this.hitBullet(bullet, enemy);
         }, null, this.scene);
-<<<<<<< refs/remotes/origin/Jacob3
 
         this.scene.physics.add.overlap(this.scene.explosions, this.scene.enemies, (explosion, enemy) => {
             let en = this.enemies[enemy.name];
             if(en && !en.delete) en.receiveDamage(100);
-            //console.log(en, enemy.name);
         }, null, this.scene);
 
-=======
-        this.scene.physics.add.overlap(this.scene.explosions, this.scene.enemies, (explosion, enemy) => {
-            let en = this.enemies[enemy.name];
-            if(en) en.receiveDamage(100);
-        }, null, this.scene);
->>>>>>> Missile Update before Rebase
     }
 
     hitPlayer(playerEntity, enemyEntity) {
@@ -59,19 +51,15 @@ class EnemyManager {
     }
 
     hitBullet(bullet, enemy) {
-<<<<<<< refs/remotes/origin/Jacob3
 
         //console.log("index: " + enemy.name);
 
         let en = this.enemies[enemy.name];
         let bl; // = this.player.gun.projectiles[bullet.name];
-
-=======
         
         let en = this.enemies[enemy.name];
         let bl;
         
->>>>>>> Missile Update before Rebase
         //search through the guns array and their respective projectiles array to find THIS bullet
         let gunInd = -1; //track the gun used. good for calling enemy stuff
         for (let i = 0; i < this.player.gunArray.length; ++i) {
@@ -87,7 +75,6 @@ class EnemyManager {
         }
 
         if (en && bl) {
-<<<<<<< refs/remotes/origin/Jacob3
             //bl.delete = true;     SHOULD SET DELETE FROM PROJECTILE'S ONHIT() INSTEAD OF HERE
             if (gunInd == 1) {
                 bl.onHit(en);
@@ -97,10 +84,8 @@ class EnemyManager {
                 this.scene.bloodEmitter.emitParticleAt(en.entity.x, en.entity.y);
                 en.reciveDamage(bl.damage);
             }
-=======
             en.receiveDamage(bl.damage);
             bl.onHit();
->>>>>>> Missile Update before Rebase
         }
 
     } //hitBullet()
@@ -139,13 +124,9 @@ class EnemyManager {
                 this.checkDistanceToGrav(this.enemies[i]);
                 if (this.enemies[i].delete) {
                     this.enemies[i].onDie();
-<<<<<<< refs/remotes/origin/Jacob3
                     this.enemies[i] = null;
-
-=======
                     this.enemies.splice(i, 1);
                     
->>>>>>> Missile Update before Rebase
                 }
             }
         }

@@ -9,12 +9,8 @@ class Projectile {
         this.isLeftSplit = false;
         this.isRightSplit = false;
         this.splitAngleChange = 30.7;
-<<<<<<< refs/remotes/origin/Jacob3
-        this.damage = 10;
-        //console.log("shoot");
-=======
         this.damage = 2.5;
->>>>>>> Missile Update before Rebase
+
     }//constructor()
 
     init(entity) {
@@ -53,14 +49,7 @@ class Projectile {
     } //onFire()
 
     onHit() {
-<<<<<<< refs/remotes/origin/Jacob3
-        if(!this.scene.player.powerupFlags.pierceShot) {
-            this.delete = true;
-        }
-
-=======
         if(!this.scene.player.powerupFlags.pierceShot) this.delete = true;
->>>>>>> Missile Update before Rebase
     } //onHit()
 
     onDie() {

@@ -4,21 +4,15 @@ class Missile extends Projectile {
         this.speed = 200;
         this.scene = scene;
         this.owner = owner;
-<<<<<<< refs/remotes/origin/Jacob3
-        //this.enemiesCopy = this.scene.enemyManager.enemies;
-=======
+
         this.enemiesCopy = [];
->>>>>>> Missile Update before Rebase
         this.closestEnemy = null;
         this.explosion = null;
         this.damage = 10;
     }
 
     init(entity) {
-<<<<<<< refs/remotes/origin/Jacob3
         /*
-=======
->>>>>>> Missile Update before Rebase
         for (let i = 0; i < this.scene.enemyManager.enemies.length; i++) {
             this.enemiesCopy.push(this.scene.enemyManager.enemies[i]);
             console.log(i);
@@ -28,12 +22,7 @@ class Missile extends Projectile {
         super.init(entity);
     }
     update(dt) {
-<<<<<<< refs/remotes/origin/Jacob3
         super.update();        
-=======
-        super.update();
->>>>>>> Missile Update before Rebase
-
         if (this.closestEnemy != null) {
             this.findNearestEnemy();
             this.setVelocityTowardTarget(this.closestEnemy);
@@ -81,11 +70,8 @@ class Explosion {
     init(entity) {
         this.entity = entity;
         this.entity.body.allowGravity = false;
-<<<<<<< refs/remotes/origin/Jacob3
         this.entity.scaleX = .5;
         this.entity.scaleY = .5;
-=======
->>>>>>> Missile Update before Rebase
         this.scene.tweens.add({
             targets: this.entity,
             scaleX: this.maxRadius,

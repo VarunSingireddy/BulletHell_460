@@ -21,16 +21,8 @@ const config = {
             this.load.image('missile', 'data/missile.png');
             this.load.image('flame', 'data/FlameProjectile.png');
             this.load.image('hook', 'data/Hook.png');
-<<<<<<< refs/remotes/origin/Jacob3
             this.load.image('delicousTeeth', 'data/FrogBoss.png');
-
-
-
-
-=======
-            this.load.image('delicousTeeth','data/FrogBoss.png');
             this.load.image('explosion', 'data/explosion.png');
->>>>>>> Missile Update before Rebase
         },
         create: function () {
             this.player = new Player(this);
@@ -38,79 +30,7 @@ const config = {
 
             this.powerupArray = [];
             this.explosionArray = [];
-<<<<<<< refs/remotes/origin/Jacob3
             
-            var player = this.player;
-
-
-
-            this.input.keyboard.on('keydown-' + 'W', (e) => {
-                player.setDirFlags(1, true);
-            });
-            this.input.keyboard.on('keyup-' + 'W', (e) => {
-                player.setDirFlags(1, false);
-            });
-            this.input.keyboard.on('keydown-' + 'UP', (e) => {
-                player.setDirFlags(1, true);
-            });
-            this.input.keyboard.on('keyup-' + 'UP', (e) => {
-                player.setDirFlags(1, false);
-            });
-
-            this.input.keyboard.on('keydown-' + 'S', (e) => {
-                player.setDirFlags(2, true);
-            });
-            this.input.keyboard.on('keyup-' + 'S', (e) => {
-                player.setDirFlags(2, false);
-            });
-            this.input.keyboard.on('keydown-' + 'DOWN', (e) => {
-                player.setDirFlags(2, true);
-            });
-            this.input.keyboard.on('keyup-' + 'DOWN', (e) => {
-                player.setDirFlags(2, false);
-            });
-
-            this.input.keyboard.on('keydown-' + 'A', (e) => {
-                player.setDirFlags(3, true);
-            });
-            this.input.keyboard.on('keyup-' + 'A', (e) => {
-                player.setDirFlags(3, false);
-            });
-            this.input.keyboard.on('keydown-' + 'LEFT', (e) => {
-                player.setDirFlags(3, true);
-            });
-            this.input.keyboard.on('keyup-' + 'LEFT', (e) => {
-                player.setDirFlags(3, false);
-            });
-
-            this.input.keyboard.on('keydown-' + 'D', (e) => {
-                player.setDirFlags(4, true);
-            });
-            this.input.keyboard.on('keyup-' + 'D', (e) => {
-                player.setDirFlags(4, false);
-            });
-            this.input.keyboard.on('keydown-' + 'RIGHT', (e) => {
-                player.setDirFlags(4, true);
-            });
-            this.input.keyboard.on('keyup-' + 'RIGHT', (e) => {
-                player.setDirFlags(4, false);
-            });
-
-            this.input.keyboard.on('keydown-' + 'SPACE', (e) => {
-                player.fire(true);
-            });
-            this.input.keyboard.on('keyup-' + 'SPACE', (e) => {
-                player.fire(false);
-            });
-
-            this.input.on('pointerdown', (e) => {
-                player.fire(true);
-            });
-            this.input.on('pointerup', (e) => {
-                player.fire(false);
-            });
-=======
-
             var player = this.player;
             
             this.input.keyboard.on('keydown-' + 'W', (e)=>{player.setDirFlags(1,true);});
@@ -137,7 +57,6 @@ const config = {
             this.input.keyboard.on('keyup-' + 'SPACE', (e) => {player.fire(false);});
             this.input.on('pointerdown', (e)=>{player.fire(true);});
             this.input.on('pointerup', (e)=>{player.fire(false);});
->>>>>>> Missile Update before Rebase
 
             //switch guns
             this.input.keyboard.on('keydown-' + 'R', (e) => {
@@ -156,11 +75,6 @@ const config = {
             this.input.keyboard.on('keyup-' + 'G', (e) => {
                 player.spawnGravityGrenade(false);
             });
-
-            //this.input.keyboard.cursorKeys.on('keydown',function (event) { console.log("down");});
-
-
-
 
             this.bullets = this.physics.add.group();
             this.powerups = this.physics.add.group();
@@ -284,10 +198,8 @@ const config = {
             }
 
             this.enemyManager.update();
-<<<<<<< refs/remotes/origin/Jacob3
             this.powerupManager.update();
 
-=======
             for(let i = 0; i < this.explosionArray.length; i++) {
                 this.explosionArray[i].update();
                 if(this.explosionArray[i].delete) {
@@ -296,7 +208,6 @@ const config = {
                     
                 }
             }
->>>>>>> Missile Update before Rebase
             //this.player
             //console.log(this.player.gun.projectiles.length);
 
