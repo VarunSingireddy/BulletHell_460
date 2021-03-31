@@ -96,7 +96,7 @@ class EnemyManager {
             } else {
                 bl.onHit();
                 this.scene.bloodEmitter.emitParticleAt(en.entity.x, en.entity.y);
-                en.reciveDamage(bl.damage);
+                en.receiveDamage(bl.damage);
             }
         }
         //asconsole.log("suck");

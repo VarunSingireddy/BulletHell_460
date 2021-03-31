@@ -78,8 +78,8 @@ class Projectile {
     }//setVelocityTowardMouse()
     
     setVelocityTowardTarget(target) {
-        let dx = target.x - this.x;
-        let dy = target.y - this.y;
+        let dx = target.entity.x - this.entity.x;
+        let dy = target.entity.y - this.entity.y;
         this.angle = Math.atan2(dy, dx);
         
         this.velocity.x = this.speed * Math.cos(this.angle);

@@ -22,9 +22,7 @@ const config = {
             this.load.image('flame', 'data/FlameProjectile.png');
             this.load.image('hook', 'data/Hook.png');
             this.load.image('delicousTeeth', 'data/FrogBoss.png');
-
-
-
+            this.load.image('explosion', 'data/explosion.png');
 
         },
         create: function () {

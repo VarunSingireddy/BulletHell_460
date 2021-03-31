@@ -16,11 +16,11 @@ class Missile extends Projectile {
             this.enemiesCopy.push(this.scene.enemyManager.enemies[i]);
         }
         */
-        this.enemiesCopy = this.scene.enemyManager.getEnemyArray();        
+        this.enemiesCopy = this.scene.enemyManager.getEnemyArray();
         super.init(entity);
     }
     update(dt) {
-        super.update();        
+        super.update();
 
         if (this.closestEnemy != null) {
             this.findNearestEnemy();
@@ -35,12 +35,15 @@ class Missile extends Projectile {
     findNearestEnemy() {
         let distanceToClosestEnemy = 10000;
         for (let i = 0; i < this.enemiesCopy.length; i++) {
-            let distanceToEnemy = this.getDistance(this.enemiesCopy[i]);
-            console.log(this.getDistance(this.enemiesCopy[i]));
-            if (distanceToEnemy < distanceToClosestEnemy) {
-                distanceToClosestEnemy = distanceToEnemy;
-                this.closestEnemy = this.enemiesCopy[i];
+            if (this.enemiesCopy[i]) {
+                let distanceToEnemy = this.getDistance(this.enemiesCopy[i]);
+                console.log(this.getDistance(this.enemiesCopy[i]));
+                if (distanceToEnemy < distanceToClosestEnemy) {
+                    distanceToClosestEnemy = distanceToEnemy;
+                    this.closestEnemy = this.enemiesCopy[i];
+                }
             }
+
         }
     }
     getDistance(target) {

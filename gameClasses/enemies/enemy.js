@@ -58,7 +58,7 @@ class Enemy {
         this.entity.body.setVelocity(this.xDir * this.speed, this.yDir * this.speed);
     }
 
-    reciveDamage(damage) {
+    receiveDamage(damage) {
         this.health -= damage;
     }
 
