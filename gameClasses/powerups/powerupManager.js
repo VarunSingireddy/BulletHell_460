@@ -74,7 +74,7 @@ class PowerupManager {
     addPowerup() { //TODO: pass in the type of enemy to spawn and it's position
         let pu = new Powerup(this.player, this.scene);
         //pu.init(this.scene.powerups.create(Math.random() * this.scene.width, Math.random() * this.scene.height, 'default'));
-        pu.init(this.scene.powerups.create(500,500, 'default'));
+        pu.init(this.scene.powerups.create(Math.random() * 1280, Math.random() * 720, 'default'));
 
 
         let id = this.nextPowerupIndex;

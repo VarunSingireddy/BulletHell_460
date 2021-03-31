@@ -105,7 +105,7 @@ const config = {
             });
 
             this.input.keyboard.on('keydown-' + 'T', (e) => {
-                this.spawnPowerup('bullet');
+                this.powerupManager.addPowerup();
             });
             this.input.keyboard.on('keydown-' + 'G', (e) => {
                 player.spawnGravityGrenade(true);
