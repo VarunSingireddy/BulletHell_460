@@ -5,11 +5,12 @@ class Player {
         this.velocity = new Phaser.Math.Vector2(0, 0);
         this.dir = new Phaser.Math.Vector2(0, 0);
         this.gun = new Gun(this, scene, 'default', 'normal');
-        this.hook = new Gun(this, scene, 'bullet', 'hook');
+        this.hook = new Gun(this, scene, 'hook', 'hook');
         this.gravGrenade = new Gun(this, scene, 'default', 'gravGrenade');
         this.ricochet = new Gun(this, scene, 'bullet', 'ricochet');
-        this.launcher = new Launcher(this, scene, 'missile');
-        this.gunArray = [this.gun, this.hook, this.ricochet, this.launcher];
+        this.launcher = new Gun(this, scene, 'missile', 'missile');
+        this.flameThrower = new Gun(this, scene, 'flame', 'flame');
+        this.gunArray = [this.gun, this.hook, this.ricochet, this.launcher, this.flameThrower];
         this.gunIndex = 0;
 
         this.multiShotTimer = 5;
@@ -18,7 +19,7 @@ class Player {
         this.pierceShotTimer = 5;
 
         this.powerupFlags = {
-            portal: true,
+            portal: false,
             multiShot: false,
             slowPocket: false,
             pierceShot: false,
@@ -46,6 +47,8 @@ class Player {
         this.hook.init(this.scene.add.image(this.entity.x, this.entity.y, 'bullet'));
         this.gravGrenade.init(this.scene.add.image(this.entity.x, this.entity.y, null));
         this.ricochet.init(this.scene.add.image(this.entity.x, this.entity.y, 'bullet'));
+        this.launcher.init(this.scene.add.image(this.entity.x, this.entity.y, 'missile'));
+        this.flameThrower.init(this.scene.add.image(this.entity.x, this.entity.y, 'flame'));
 
 
         //console.log(this.entity);
@@ -72,6 +75,8 @@ class Player {
         this.hook.update(dt);
         this.ricochet.update(dt);
         this.gravGrenade.update(dt);
+        this.launcher.update(dt);
+        this.flameThrower.update(dt);
         this.updatePowerupFlags(dt);
 
         //console.log(this.gun.projectiles.length);

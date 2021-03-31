@@ -53,12 +53,17 @@ class Gun {
             if (this.gunType == 'normal') {
                 bullet = new Projectile(this, this.scene, this.owner.powerupFlags);
             } else if (this.gunType == 'hook') {
+                if(this.projectiles.length > 0) return;
                 bullet = new Hook(this, this.scene, this.owner.powerupFlags);
             } else if (this.gunType == 'gravGrenade') {
                 bullet = new GravGrenade(this, this.scene, this.owner.powerupFlags);
             } else if (this.gunType == 'ricochet') {
                 bullet = new Ricochet(this, this.scene, this.owner.powerupFlags, this.bounceTimes, this.changedVelocity);
-            }
+            } else if (this.gunType == 'missile') {
+                bullet = new Missile(this, this.scene, this.owner.powerupFlags);
+            } else if (this.gunType == 'flame') {
+                bullet = new Flame(this, this.scene, this.owner.powerupFlags);
+            } 
             //console.log(this.owner);
             bullet.init(this.scene.bullets.create(this.entity.x, this.entity.y, this.img)); //'default'));
             bullet.onFire();

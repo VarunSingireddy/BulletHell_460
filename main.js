@@ -20,8 +20,8 @@ const config = {
             this.load.image('player', 'data/Player.png');
             this.load.image('blood', 'data/Blood.png');
             this.load.image('missile', 'data/missile.png');
-
-            
+            this.load.image('flame', 'data/FlameProjectile.png');
+            this.load.image('hook', 'data/Hook.png');            
             this.load.image('delicousTeeth','data/FrogBoss.png');
 
             
