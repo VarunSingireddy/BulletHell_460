@@ -20,9 +20,7 @@ class Gun {
         this.shootDownPrev = false; //not used in the
         this.projectiles = [];
         this.img = img;
-        this.gunType = gunType;
-        this.bounceTimes = 0;
-        this.changedVelocity = new Phaser.Math.Vector2(0, 0);
+        this.gunType = gunType;        
     }
 
     init(entity) {
@@ -66,9 +64,7 @@ class Gun {
             } 
             //console.log(this.owner);
             bullet.init(this.scene.bullets.create(this.entity.x, this.entity.y, this.img)); //'default'));
-            bullet.onFire();
-            this.bounceTimes = 0;
-            this.changedVelocity = new Phaser.Math.Vector2(0, 0);
+            bullet.onFire();            
 
             //console.log(bulletIndex);
             //this.projectiles[bulletIndex] = bullet;

@@ -11,6 +11,7 @@ class Enemy {
         this.isSlow = false;
         this.radius = 50;
         this.isHooked = false;
+        this.isInGravPull = false;
         //unit vectors for movement direction
         this.xDir = 0;
         this.yDir = 0;
@@ -34,22 +35,27 @@ class Enemy {
             this.delete = true;
 
         }
-        
+
         //have enemies slowly move towards player
-        if (!this.isHooked) {
-            //calculate unit vectors and move enemy
-            this.xDir = this.entity.x - this.player.entity.body.x;
-            this.yDir = this.entity.y - this.player.entity.body.y;
-            let hyp = Math.sqrt(Math.pow(this.xDir, 2) + Math.pow(this.yDir, 2));
-            this.xDir /= -hyp;
-            this.yDir /= -hyp;
-            this.entity.body.setVelocity(this.xDir * this.speed, this.yDir * this.speed);
+        if (!this.isHooked && !this.isInGravPull) {
+            this.calcVelocity();            
 
             //we can put shooting or whatever else here
         } else {
             this.hooked(); //since this is the only action, they are essentially stunned
         }
 
+    }
+
+    calcVelocity() {
+        //calculate unit vectors and move enemy
+        this.xDir = this.entity.x - this.player.entity.body.x;
+        this.yDir = this.entity.y - this.player.entity.body.y;
+        let hyp = Math.sqrt(Math.pow(this.xDir, 2) + Math.pow(this.yDir, 2));
+        this.xDir /= -hyp;
+        this.yDir /= -hyp;
+        this.entity.body.setVelocity(this.xDir * this.speed, this.yDir * this.speed);
+        this.entity.body.setVelocity(this.xDir * this.speed, this.yDir * this.speed);
     }
 
     reciveDamage(damage) {

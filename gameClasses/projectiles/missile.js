@@ -1,17 +1,27 @@
 class Missile extends Projectile {
-    constructor(scene, owner, flags) {
-        super(scene, owner, flags);
+    constructor(owner, scene, flags) {
+        super(owner, scene, flags);
         this.speed = 200;
-        this.currRadius = 0;
-        this.blastRadius = 150;
-        this.enemiesCopy = scene.enemies.children;
-        this.closestEnemy;
-        this.explosion;
-        super.init(owner);
+        this.scene = scene;
+        this.owner = owner;
+        //this.enemiesCopy = this.scene.enemyManager.enemies;
+        this.closestEnemy = null;
+        this.explosion = null;
+        this.damage = 10;
     }
 
+    init(entity) {
+        /*
+        for (let i = 0; i < this.scene.enemyManager.enemies.length; i++) {
+            this.enemiesCopy.push(this.scene.enemyManager.enemies[i]);
+        }
+        */
+        this.enemiesCopy = this.scene.enemyManager.getEnemyArray();        
+        super.init(entity);
+    }
     update(dt) {
-        super.update();
+        super.update();        
+
         if (this.closestEnemy != null) {
             this.findNearestEnemy();
             this.setVelocityTowardTarget(this.closestEnemy);
@@ -19,11 +29,14 @@ class Missile extends Projectile {
             this.findNearestEnemy();
         }
     }
-
+    onFire() {
+        this.findNearestEnemy();
+    }
     findNearestEnemy() {
         let distanceToClosestEnemy = 10000;
         for (let i = 0; i < this.enemiesCopy.length; i++) {
             let distanceToEnemy = this.getDistance(this.enemiesCopy[i]);
+            console.log(this.getDistance(this.enemiesCopy[i]));
             if (distanceToEnemy < distanceToClosestEnemy) {
                 distanceToClosestEnemy = distanceToEnemy;
                 this.closestEnemy = this.enemiesCopy[i];
@@ -31,37 +44,42 @@ class Missile extends Projectile {
         }
     }
     getDistance(target) {
-        let dx = target.x - this.x;
-        let dy = target.y - this.y;
+        let dx = target.entity.x - this.entity.x;
+        let dy = target.entity.y - this.entity.y;
         return Math.sqrt(dx * dx + dy * dy);
     }
 
     onHit() {
         super.onHit();
-        this.explosion = new Explosion(this.x, this.y);
-        while (this.currRadius < this.blastRadius) {
-            this.currRadius++;
-            this.explosion.update(this.currRadius);
-        }
-        if (this.currRadius >= this.blastRadius) {
-            this.explosion.isDead = true;
-            this.explosion = null;
-        }
+        this.explosion = new Explosion(this.x, this.y, this.scene);
+        this.explosion.init(this.scene.explosions.create(this.entity.x, this.entity.y, this.explosion.sprite));
+        this.scene.explosionArray.push(this.explosion);
     }
 }
 
 class Explosion {
-    constructor(x, y) {
+    constructor(x, y, scene) {
         this.x = x;
         this.y = y;
-        this.radius = 0;
-        this.sprite;
-        this.isDead = false;
+        this.scene = scene;
+        this.maxRadius = 2.5;
+        this.sprite = 'explosion';
+        this.delete = false;
     }
-    update(rad) {
-        this.radius = rad;
-        if (this.isDead) {
-            this.radius = 0;
-        }
+    init(entity) {
+        this.entity = entity;
+        this.entity.body.allowGravity = false;
+        this.entity.scaleX = .5;
+        this.entity.scaleY = .5;
+        this.scene.tweens.add({
+            targets: this.entity,
+            scaleX: this.maxRadius,
+            scaleY: this.maxRadius,
+            alpha: 0.01,
+            duration: 400
+        });
+    }
+    update() {
+        if (this.entity.alpha <= 0.01) this.delete = true;
     }
 }

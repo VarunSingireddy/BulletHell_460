@@ -34,6 +34,12 @@ class EnemyManager {
             this.hitBullet(bullet, enemy);
         }, null, this.scene);
 
+        this.scene.physics.add.overlap(this.scene.explosions, this.scene.enemies, (explosion, enemy) => {
+            let en = this.enemies[enemy.name];
+            if(en && !en.delete) en.receiveDamage(100);
+            //console.log(en, enemy.name);
+        }, null, this.scene);
+
     }
 
     hitPlayer(playerEntity, enemyEntity) {
@@ -55,7 +61,7 @@ class EnemyManager {
         let bl; // = this.player.gun.projectiles[bullet.name];
 
         //search through the guns array and their respective projectiles array to find THIS bullet
-        let gunInd = -1;//track the gun used. good for calling enemy stuff
+        let gunInd = -1; //track the gun used. good for calling enemy stuff
         for (let i = 0; i < this.player.gunArray.length; ++i) {
             for (let j = 0; j < this.player.gunArray[i].projectiles.length; ++j) //O(n^2) time. Gross
             {
@@ -70,15 +76,13 @@ class EnemyManager {
 
         if (en && bl) {
             //bl.delete = true;     SHOULD SET DELETE FROM PROJECTILE'S ONHIT() INSTEAD OF HERE
-            if(gunInd == 1)
-            {
+            if (gunInd == 1) {
                 bl.onHit(en);
                 en.isHooked = true;
-            }
-            else
-            {
+            } else {
                 bl.onHit();
-                en.reciveDamage(1);
+                this.scene.bloodEmitter.emitParticleAt(en.entity.x, en.entity.y);
+                en.reciveDamage(bl.damage);
             }
         }
         //asconsole.log("suck");
@@ -101,7 +105,7 @@ class EnemyManager {
     }
 
     update() {
-
+        //console.log(this.scene.bullets.children);
         /*
         this.enemies.forEach((e)=>{
             e.update();
@@ -117,8 +121,8 @@ class EnemyManager {
         for (let i = 0; i < this.enemies.length; ++i) {
 
             if (this.enemies[i]) {
-                this.checkDistanceToGrav(this.enemies[i]);
                 this.enemies[i].update();
+                this.checkDistanceToGrav(this.enemies[i]);
                 if (this.enemies[i].delete) {
                     this.enemies[i].onDie();
                     this.enemies[i] = null;
@@ -128,8 +132,14 @@ class EnemyManager {
         }
     }
 
+    getEnemyArray() {
+        return this.enemies;
+    }
+
 
     checkDistanceToGrav(enemy) {
+        enemy.isInGravPull = false;
+        enemy.calcVelocity();
         if (this.player.gravGrenade.projectiles.length <= 0) return;
 
         for (let i = 0; i < this.player.gravGrenade.projectiles.length; i++) {
@@ -137,12 +147,13 @@ class EnemyManager {
             this.dist = this.calcDistance(enemy.entity.x, enemy.entity.y, this.player.gravGrenade.projectiles[i].entity.x, this.player.gravGrenade.projectiles[i].entity.y);
 
             if (this.dist < enemy.radius + this.player.gravGrenade.projectiles[i].radius && this.player.gravGrenade.projectiles[i].enableGravPull) {
-                //this.scene.accelerateToObject(enemy.entity, this.player.gravGrenade.projectiles[i].entity, 100,500,500);
+                enemy.isInGravPull = true;
                 let angle = this.calcAngle(enemy.entity.x, enemy.entity.y, this.player.gravGrenade.projectiles[i].entity.x, this.player.gravGrenade.projectiles[i].entity.y)
-                enemy.xVelocity = Math.cos(angle) * 100;
-                enemy.yVelocity = Math.sin(angle) * 100;
+                enemy.xVelocity = Math.cos(angle);
+                enemy.yVelocity = Math.sin(angle);
 
-                enemy.entity.body.setVelocity(enemy.xVelocity, enemy.yVelocity);
+                let speed = 400;
+                enemy.entity.body.setVelocity(enemy.xVelocity * speed, enemy.yVelocity * speed);
             }
         }
     }

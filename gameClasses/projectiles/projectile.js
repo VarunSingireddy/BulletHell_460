@@ -9,6 +9,7 @@ class Projectile {
         this.isLeftSplit = false;
         this.isRightSplit = false;
         this.splitAngleChange = 30.7;
+        this.damage = 10;
         //console.log("shoot");
     }//constructor()
 

@@ -10,6 +10,7 @@ class Powerup {
         1 = multishot
         2 = portal
         3 = slowpockets
+        4 = piercing
         */
 
     }
