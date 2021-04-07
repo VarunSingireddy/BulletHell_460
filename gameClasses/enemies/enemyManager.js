@@ -44,6 +44,11 @@ class EnemyManager {
         this.scene.physics.add.overlap(this.scene.bullets, this.scene.enemies, (bullet, enemy) => {
             this.hitBullet(bullet, enemy);
         }, null, this.scene);
+        
+        //testing enemies shooting player
+        this.scene.physics.add.overlap(this.scene.bullets, this.player.entity, (bullet, player) => {
+            this.shootPlayer(bullet, player);
+        }, null, this.scene);
 
         this.scene.physics.add.overlap(this.scene.explosions, this.scene.enemies, (explosion, enemy) => {
             let en = this.enemies[enemy.name];

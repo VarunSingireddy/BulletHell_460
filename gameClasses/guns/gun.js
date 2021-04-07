@@ -117,8 +117,8 @@ class Gun {
                 //this.projectiles[bulletIndexR] = bulletR;
                 bulletR.entity.name = bulletIndexR;
                 this.projectiles.push(bulletR);
-            }
-        }
+            }//if (this.owner.powerupFlags.multishot)
+        }//if (bool && !this.shootDown)
 
         this.shootDown = bool;
 
@@ -136,4 +136,25 @@ class Gun {
             }
         }
     } //updateProjectiles()
+
+    enemyFire(p)//enemy using gun
+    {
+        let bulletIndex = this.nextBulletIndex;
+        let bullet = new Projectile(this, this.scene, this.owner.powerupFlags);
+        
+        bullet.init(this.scene.bullets.create(this.owner.entity.x, this.owner.entity.y, this.img));
+        
+        //send bullet towards player
+        //console.log(this.owner);
+        let xTarget = this.owner.entity.body.x - p.entity.body.x;
+        let yTarget = this.owner.entity.body.y - p.entity.body.y;
+        let hyp = Math.sqrt(Math.pow(xTarget, 2) + Math.pow(yTarget, 2));
+        xTarget /= -hyp;
+        yTarget /= -hyp;
+        
+        bullet.entity.body.setVelocity(xTarget * bullet.speed, yTarget * bullet.speed);
+        
+        this.projectiles.push(bullet);
+        bullet.entity.name = bulletIndex;
+    }
 }

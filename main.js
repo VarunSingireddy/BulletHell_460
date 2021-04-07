@@ -24,6 +24,7 @@ const config = {
             this.load.image('delicousTeeth', 'data/FrogBoss.png');
             this.load.image('explosion', 'data/explosion.png');
 
+            this.load.image('rope', 'data/rope.png');
         },
         create: function () {
             this.player = new Player(this);
