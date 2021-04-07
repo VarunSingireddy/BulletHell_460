@@ -56,7 +56,6 @@ class Projectile {
     } //onHit()
 
     onDie() {
-        //this.entity = null;
         this.velocity = new Phaser.Math.Vector2(0, 0);
         this.owner = null;
         this.scene = null;
@@ -76,16 +75,5 @@ class Projectile {
         this.entity.body.setVelocity(this.velocity.x,this.velocity.y);
         
     }//setVelocityTowardMouse()
-    
-    setVelocityTowardTarget(target) {
-        let dx = target.entity.x - this.entity.x;
-        let dy = target.entity.y - this.entity.y;
-        this.angle = Math.atan2(dy, dx);
-        
-        this.velocity.x = this.speed * Math.cos(this.angle);
-        this.velocity.y = this.speed * Math.sin(this.angle);
-        
-        this.entity.body.setVelocity(this.velocity.x, this.velocity.y);
-    }
     
 }

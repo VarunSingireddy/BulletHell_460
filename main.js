@@ -33,7 +33,7 @@ const config = {
             this.explosionArray = [];
 
             var player = this.player;
-
+            this.dt = 0;
 
 
             this.input.keyboard.on('keydown-' + 'W', (e) => {
@@ -235,8 +235,8 @@ const config = {
         },
 
         update: function (time, delta) {
-
-            this.player.update(delta / 1000);
+            this.dt = delta/1000;
+            this.player.update(this.dt);
             //this.physics.add.overlap(this.player.entity, this.powerups, powerupCollisionHandler, null, this);
 
             /*for (i = 0; i < this.powerupArray.length; i++) {
@@ -259,7 +259,7 @@ const config = {
 
                 }
             }
-            this.enemySpawner(delta / 1000);
+            this.enemySpawner(this.dt);
             this.enemyManager.update();
             this.powerupManager.update();
 
